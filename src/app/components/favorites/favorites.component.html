@@ -1,0 +1,7 @@
+<div class="favorites">
+    <h2>Favorite Dogs</h2>
+    <div class="dog-list">
+      <app-dog-card *ngFor="let dog of favoriteDogs" [dog]="dog"></app-dog-card>
+    </div>
+    <button pButton label="Find Match" (click)="findMatch()"></button>
+  </div>

@@ -1,0 +1,77 @@
+  <div class="container">
+    <div class="grid">
+      <div class="col-12 md:col-3">
+        <p-card header="Filters" styleClass="h-full">
+          <div class="mb-3">
+            <h4>Breeds</h4>
+            <p-multiSelect
+              [options]="breeds"
+              [(ngModel)]="selectedBreeds"
+              [filter]="true"
+              placeholder="Select Breeds"
+              (onChange)="search()"
+              styleClass="w-full"
+            ></p-multiSelect>
+          </div>
+          <div class="mb-3">
+            <h4>Age</h4>
+            <p-dropdown
+              [options]="ageOptions"
+              [(ngModel)]="selectedAge"
+              placeholder="Select Age"
+              (onChange)="search()"
+              styleClass="w-full"
+            ></p-dropdown>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="col-12 md:col-9">
+        <div class="mb-3 flex justify-content-end align-items-center">
+          <p-dropdown
+            [options]="sortOptions"
+            [(ngModel)]="sortField"
+            placeholder="Sort By"
+            (onChange)="onSortChange($event)"
+          ></p-dropdown>
+          <p-button
+            *ngIf="favorites.length > 0"
+            label="Find Match"
+            icon="pi pi-heart"
+            (onClick)="findMatch()"
+          ></p-button>
+        </div>
+
+        <div class="grid">
+          <div *ngFor="let dog of dogs" class="col-12 md:col-6 lg:col-3 mb-3">
+            <app-dog-card
+              [dog]="dog"
+              [isFavorite]="isFavorite(dog)"
+              (favoriteToggle)="toggleFavorite($event)"
+            ></app-dog-card>
+          </div>
+        </div>
+
+        <p-paginator
+          [rows]="12"
+          [totalRecords]="totalDogs"
+          (onPageChange)="onPageChange($event)"
+        ></p-paginator>
+      </div>
+    </div>
+  </div>
+
+  <p-dialog
+    [(visible)]="showMatchDialog"
+    header="Your Perfect Match!"
+    [modal]="true"
+    [style]="{width: '90vw', maxWidth: '500px'}"
+  >
+    <div *ngIf="matchedDog" class="text-center">
+      <app-dog-card
+        [dog]="matchedDog"
+        [isFavorite]="true"
+        (favoriteToggle)="toggleFavorite($event)"
+      ></app-dog-card>
+    </div>
+  </p-dialog>

@@ -1,0 +1,31 @@
+  <p-card class="dog-card">
+    <ng-template pTemplate="header">
+      <div class="dog-image-container">
+        <img [src]="dog.img" [alt]="dog.name" class="dog-image" />
+      </div>
+    </ng-template>
+    <div class="dog-info">
+      <h3 class="dog-name">{{dog.name}}</h3>
+      <div class="info-row">
+        <i class="pi pi-tag"></i>
+        <span>{{dog.breed}}</span>
+      </div>
+      <div class="info-row">
+        <i class="pi pi-calendar"></i>
+        <span>{{dog.age}} years old</span>
+      </div>
+      <div class="info-row">
+        <i class="pi pi-map-marker"></i>
+        <span>{{dog.zip_code}}</span>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button
+        [label]="isFavorite ? 'Remove from Favorites' : 'Add to Favorites'"
+        [severity]="isFavorite ? 'danger' : 'success'"
+        [icon]="isFavorite ? 'pi pi-heart-fill' : 'pi pi-heart'"
+        (onClick)="onFavoriteClick()"
+        styleClass="w-full"
+      ></p-button>
+    </ng-template>
+  </p-card>
