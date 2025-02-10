@@ -31,10 +31,6 @@ export class DogService {
     return this.http.get<string[]>(`${API_URL}/dogs/breeds`, { withCredentials: true });
   }
 
-  // searchDogs(): Observable<any> {
-  //   return this.http.get( `${API_URL}/dogs/search`, { withCredentials: true });
-  // }
-
   searchDogs(params: any): Observable<{ dogs: Dog[], total: number, next: string, prev: string }> {
     return this.http.get<SearchResponse>(`${API_URL}/dogs/search`, {
       params,
