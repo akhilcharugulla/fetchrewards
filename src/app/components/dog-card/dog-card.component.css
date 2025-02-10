@@ -1,46 +1,160 @@
-  .dog-card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .dog-card ::ng-deep .p-card-body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .dog-card ::ng-deep .p-card-content {
-    flex: 1;
-    padding: 1rem;
-  }
-  .dog-image-container {
-    position: relative;
-    padding-top: 75%; /* 4:3 aspect ratio */
-    overflow: hidden;
-  }
-  .dog-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .dog-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .dog-name {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-  .info-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-color-secondary);
-  }
-  .info-row i {
-    font-size: 1rem;
-  }
+.dog-card {
+  height: auto; /* Let the content dictate the height */
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Remove flex:1 so the card content shrinks to its actual height */
+.dog-card ::ng-deep .p-card-body {
+  /* flex: 1;  <-- Removed to prevent forced expansion */
+  display: flex;
+  flex-direction: column;
+  padding: 0; /* Remove default padding */
+}
+
+/* Adjust the padding on the content container */
+.dog-card ::ng-deep .p-card-content {
+  /* flex: 1;  <-- Removed to let the content wrap its children */
+  padding: 0.75rem; /* Reduced padding */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 1));
+}
+
+.dog-image-container {
+  position: relative;
+  padding-top: 80%; /* Keeps the image container height relative to its width */
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+
+.dog-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.dog-card:hover .dog-image {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+}
+
+.dog-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* You can reduce this further if needed */
+  padding: 0.5rem; /* Reduced padding from 1rem */
+  background: rgba(255, 255, 255, 0.98);
+  opacity: 0.95;
+  transition: opacity 0.3s ease;
+}
+
+.dog-card:hover .dog-info {
+  opacity: 1;
+}
+
+.dog-name {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color, #2196F3);
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem; /* Reduced gap */
+  color: var(--text-color-secondary);
+  padding: 0.25rem; /* Reduced padding from 0.5rem */
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.02);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.info-row:hover {
+  background: rgba(0, 0, 0, 0.04);
+  transform: translateX(4px);
+}
+
+.info-row i {
+  font-size: 1rem;
+  color: var(--primary-color, #2196F3);
+  transition: color 0.2s ease;
+}
+
+.info-row:hover i {
+  color: var(--primary-color-darker, #1976D2);
+}
+
+/* Favorite icon styling remains unchanged */
+.favorite-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 2;
+}
+
+.favorite-icon.not-favorited {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.favorite-icon.favorited {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF4785 100%);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.favorite-icon:hover {
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+}
+
+.favorite-icon:active {
+  transform: scale(0.95);
+}
+
+.favorite-icon i {
+  font-size: 1.5rem;
+  color: white;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: filter 0.2s ease;
+}
+
+.favorite-icon:hover i {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Overlay gradient for the image container */
+.dog-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 30%);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.dog-card:hover .dog-image-container::after {
+  opacity: 0.8;
+}

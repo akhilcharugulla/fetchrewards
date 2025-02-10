@@ -37,6 +37,7 @@ export class SearchComponent implements OnInit {
   matchedDog: Dog | null = null;
   currentPage: number = 0;
   showFilters: boolean = true;
+  filtersHidden: boolean = true; 
 
   ageOptions = [
     { label: 'Select Age', value: null },
@@ -97,6 +98,7 @@ export class SearchComponent implements OnInit {
 
   toggleFilters() {
     this.showFilters = !this.showFilters;
+    this.filtersHidden = !this.filtersHidden;
   }
 
   onSortChange(event: any) {
