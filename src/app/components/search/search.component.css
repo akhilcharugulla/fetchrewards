@@ -7,38 +7,52 @@
   display: flex;
   flex-wrap: wrap;
   margin: -0.5rem;
+   /* This ensures the grid fills the full viewport height */
+}
+
+.grid1{
+  height: 100vh !important;
 }
 
 .col-12 {
   padding: 0.5rem;
 }
 
+/* Sidebar and Main Content (Ensures equal height) */
+.sidebar,
+.col-12 {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensures both elements grow to full height */
+}
+
 .md\:col-3 {
   flex: 0 0 25%;
   max-width: 25%;
-  transition: all 0.3s ease; /* Smooth transition for sidebar */
+  transition: all 0.3s ease;
 }
 
 .md\:col-9 {
   flex: 0 0 75%;
   max-width: 75%;
-  transition: all 0.3s ease; /* Smooth transition for main content */
+  transition: all 0.3s ease;
 }
 
 .md\:col-12 {
   flex: 0 0 100%;
   max-width: 100%;
-  transition: all 0.3s ease; /* Smooth transition for main content */
+  transition: all 0.3s ease;
 }
 
-/* Sidebar */
+/* Sidebar Styles */
 .sidebar {
   background: #fff;
   border-right: 1px solid #dee2e6;
-  height: 100vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
   transition: all 0.3s ease;
-  margin-left: -20px;
 }
 
 .sidebar.collapsed {
@@ -56,24 +70,47 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #dee2e6;
-  padding-bottom: 0.5rem;
-}
-
-/* Filter Icon */
-.filter-icon {
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.filter-icon:hover {
-  background-color: #f0f0f0;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Filters Container */
 .filters-container {
+  padding: 0.5rem 1rem;
+  flex-grow: 1; /* Makes the filters container grow to take remaining space */
+}
+
+.filter-group {
+  margin-bottom: 1.5rem;
+}
+
+.filter-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+/* Control Bar Styling */
+.control-bar {
+  background-color: #fff;
   padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* p-multiselect and p-dropdown to have same width */
+:host ::ng-deep .p-multiselect,
+:host ::ng-deep .p-dropdown {
+  width: 100% !important; /* Ensure full width */
+  min-width: 200px !important; /* Optional: Adjust as needed */
 }
 
 /* Dog Cards Grid */
@@ -102,80 +139,49 @@
   max-width: 25%;
 }
 
-/* PrimeNG Overrides */
-:host ::ng-deep .p-dropdown,
-:host ::ng-deep .p-multiselect {
-  width: 100% !important;
+/* PrimeNG Component Overrides */
+:host ::ng-deep {
+  .p-dropdown,
+  .p-multiselect {
+    width: 100% !important;
+    min-width: 200px !important;
+    max-width: 100% !important;
+  }
+
+  .p-dropdown-panel,
+  .p-multiselect-panel {
+    min-width: 200px !important;
+  }
+
+  .p-card {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 
+                0 1px 1px 0 rgba(0, 0, 0, 0.14), 
+                0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  .p-dialog {
+    .p-dialog-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .p-dialog-content {
+      padding: 1.5rem;
+    }
+  }
+
+  .p-paginator {
+    background: #fff;
+    border-radius: 6px;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
 }
 
-:host ::ng-deep .p-card {
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 
-              0 1px 1px 0 rgba(0, 0, 0, 0.14), 
-              0 1px 3px 0 rgba(0, 0, 0, 0.12);
-}
-
-/* Sort By Dropdown */
-:host ::ng-deep .p-dropdown.w-10rem {
-  width: 10rem !important; /* Fixed width for Sort By dropdown */
-}
-
-/* Flex Container for Filter Icon and Sort By */
-.flex.justify-content-between {
+.controls-group {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
   align-items: center;
-  width: 100%;
-}
-
-/* Filter Text */
-.filter-text {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #495057;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.filter-text:hover {
-  color: #007bff;
-}
-
-/* Filter Toggle Container */
-.filter-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.filter-toggle:hover {
-  background-color: #f0f0f0;
-}
-
-/* Filter Icon */
-.filter-icon {
-  font-size: 1.2rem;
-  color: #495057;
-  transition: color 0.2s;
-}
-
-.filter-toggle:hover .filter-icon {
-  color: #007bff;
-}
-
-/* Filter Text */
-.filter-text {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #495057;
-  transition: color 0.2s;
-}
-
-.filter-toggle:hover .filter-text {
-  color: #007bff;
 }

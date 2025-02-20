@@ -2,7 +2,6 @@
   <ng-template pTemplate="header">
     <div class="dog-image-container">
       <img [src]="dog.img" [alt]="dog.name" class="dog-image" />
-      <!-- Favorite icon placed in the top right -->
       <span
         class="favorite-icon"
         [ngClass]="{ favorited: isFavorite, 'not-favorited': !isFavorite }"
@@ -24,7 +23,14 @@
     </div>
     <div class="info-row">
       <i class="pi pi-map-marker"></i>
-      <span>{{ dog.zip_code }}</span>
+      <span>
+        <ng-container *ngIf="location">
+          {{ location.city }}, {{ location.state }}
+        </ng-container>
+        <ng-container *ngIf="distance">
+          ({{ distance }} miles away)
+        </ng-container>
+      </span>
     </div>
   </div>
 </p-card>

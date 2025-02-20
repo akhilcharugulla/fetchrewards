@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Dog, DogService } from '../../services/dog.service';
+import { LocationService, Location } from '../../services/location.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CardModule } from 'primeng/card';
@@ -23,6 +24,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 })
 
 
+
+
 export class SearchComponent implements OnInit {
   dogIds: any[] = [];
   breeds: string[] = [];
@@ -37,7 +40,12 @@ export class SearchComponent implements OnInit {
   matchedDog: Dog | null = null;
   currentPage: number = 0;
   showFilters: boolean = true;
-  filtersHidden: boolean = true; 
+  filtersHidden: boolean = true;
+  locationOptions:any[] = [];
+  dogLocations: Map<string, Location> = new Map();
+  userLocation: GeolocationPosition | null = null;
+
+
 
   ageOptions = [
     { label: 'Select Age', value: null },
@@ -47,6 +55,7 @@ export class SearchComponent implements OnInit {
     { label: 'Senior (8+ years)', value: { min: 8, max: 20 } }
   ];
 
+
   sortOptions = [
     { label: 'Breed (A-Z)', value: 'breed:asc' },
     { label: 'Breed (Z-A)', value: 'breed:desc' },
@@ -55,44 +64,96 @@ export class SearchComponent implements OnInit {
     { label: 'Age (Youngest)', value: 'age:asc' },
     { label: 'Age (Oldest)', value: 'age:desc' }
   ];
+  results: any[] = [];
+  locationInput = ''; // User input for city/state/ZIP
+  milesInput = 100; // Default search radius
+  selectedZipCode:any = [];
+  selectedCities: any = []
+  zipCodes:any[] = [];
+  cities: any[] = [];
+
 
   constructor(
     private dogService: DogService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private locationService:LocationService
   ) {}
+
 
   ngOnInit() {
     this.loadBreeds();
     this.search();
+    this.searchLocations()
   }
+
 
   onPageChange(event: any) {
     this.currentPage = event.page;
     this.search();
   }
-  
+ 
   loadBreeds() {
     this.dogService.getBreeds().subscribe(breeds => {
       this.breeds = breeds;
     });
   }
 
+
   search() {
     const params: any = {
       breeds: this.selectedBreeds,
+      zipCodes: this.selectedCities ?? [],
       sort: `${this.sortField}:${this.sortOrder === 1 ? 'asc' : 'desc'}`,
       size: 12,
       from: this.currentPage * 12
     };
+
 
     if (this.selectedAge) {
       params.ageMin = this.selectedAge.min;
       params.ageMax = this.selectedAge.max;
     }
 
+
     this.dogService.searchDogs(params).subscribe(response => {
+      console.log(response)
       this.dogs = response.dogs;
       this.totalDogs = response.total;
+      this.loadDogLocations(this.dogs);
+    });
+  }
+
+  loadDogLocations(dogs: Dog[]) {
+    const zipCodes = [...new Set(dogs.map(dog => dog.zip_code))];
+    
+    this.locationService.getLocations(zipCodes).subscribe(
+      (locations) => {
+        this.dogLocations.clear();
+        locations.forEach(loc => this.dogLocations.set(loc.zip_code, loc));
+        this.calculateDistances();
+      },
+      (error) => console.error('Error loading dog locations:', error)
+    );
+  }
+
+  calculateDistances() {
+    if (!this.userLocation) return;
+
+    const userLat = this.userLocation.coords.latitude;
+    const userLon = this.userLocation.coords.longitude;
+
+    this.dogs = this.dogs.map(dog => {
+      const location = this.dogLocations.get(dog.zip_code);
+      if (location) {
+        const distance = this.locationService.calculateDistance(
+          userLat,
+          userLon,
+          location.latitude,
+          location.longitude
+        );
+        return { ...dog, distance };
+      }
+      return dog;
     });
   }
 
@@ -101,12 +162,14 @@ export class SearchComponent implements OnInit {
     this.filtersHidden = !this.filtersHidden;
   }
 
+
   onSortChange(event: any) {
     const [field, order] = event.value.split(':');
     this.sortField = field;
     this.sortOrder = order === 'asc' ? 1 : -1;
     this.search();
   }
+
 
   toggleFavorite(dog: Dog) {
     const index = this.favorites.findIndex(f => f.id === dog.id);
@@ -127,9 +190,11 @@ export class SearchComponent implements OnInit {
     }
   }
 
+
   isFavorite(dog: Dog): boolean {
     return this.favorites.some(f => f.id === dog.id);
   }
+
 
   findMatch() {
     if (this.favorites.length === 0) {
@@ -141,6 +206,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
+
     const favoriteIds = this.favorites.map(dog => dog.id);
     this.dogService.getMatch(favoriteIds).subscribe(matchId => {
       const matchedDog = this.favorites.find(dog => dog.id === matchId);
@@ -150,4 +216,30 @@ export class SearchComponent implements OnInit {
       }
     });
   }
+  searchLocations() {
+    this.locationService.searchLocations({}).subscribe(
+      (data) => {
+        const uniqueLocations = new Map();
+ 
+        data.results.forEach((value: any) => {
+          uniqueLocations.set(value.city, value.zip_code);
+        });
+ 
+        // Extract unique cities and zip codes
+        this.cities = Array.from(uniqueLocations.keys()); // Get all unique cities
+        this.zipCodes = Array.from(uniqueLocations.values()); // Get all unique zip codes
+ 
+        // Create locationOptions array
+        this.locationOptions = Array.from(uniqueLocations, ([city, zip_code]) => ({
+          label: city,   // City as label
+          value: zip_code // Zip code as value
+        }));
+      },
+      (error) => {
+        console.error('Error fetching locations:', error);
+      }
+    );
+  }
+ 
+ 
 }

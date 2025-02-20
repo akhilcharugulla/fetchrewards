@@ -10,6 +10,7 @@ export interface Dog {
   age: number;
   zip_code: string;
   breed: string;
+  distance?: number;
 }
 
 export interface SearchResponse {
@@ -20,10 +21,10 @@ export interface SearchResponse {
 }
 
 const API_URL = 'https://frontend-take-home-service.fetch.com';
+
 @Injectable({
   providedIn: 'root'
 })
-
 export class DogService {
   constructor(private http: HttpClient) {}
 
@@ -37,7 +38,6 @@ export class DogService {
       withCredentials: true
     }).pipe(
       switchMap(response => {
-        console.log("akhil",response)
         return this.getDogsByIds(response.resultIds).pipe(
           map(dogs => ({
             dogs,
@@ -51,7 +51,6 @@ export class DogService {
   }
 
   getDogsByIds(dogIds: string[]): Observable<Dog[]> {
-    console.log(dogIds)
     return this.http.post<Dog[]>(`${API_URL}/dogs`, dogIds, { withCredentials: true });
   }
 
