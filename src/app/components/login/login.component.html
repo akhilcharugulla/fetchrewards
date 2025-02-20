@@ -1,6 +1,31 @@
 <div class="login-container">
-    <h2>Login</h2>
-    <input type="text" pInputText placeholder="Enter Name" [(ngModel)]="name" />
-    <input type="email" pInputText placeholder="Enter Email" [(ngModel)]="email" />
-    <button pButton label="Login" (click)="login()">Login</button>
+  <h2>Login</h2>
+  
+  <div class="input-container">
+    <input 
+      type="text" 
+      pInputText 
+      placeholder=" " 
+      [(ngModel)]="name" 
+      (ngModelChange)="nameError = ''" 
+      required 
+    />
+    <label>Name</label>
+    <div *ngIf="nameError" class="error-message">{{ nameError }}</div>
   </div>
+  
+  <div class="input-container">
+    <input 
+      type="email" 
+      pInputText 
+      placeholder=" " 
+      [(ngModel)]="email" 
+      (ngModelChange)="emailError = ''" 
+      required 
+    />
+    <label>Email</label>
+    <div *ngIf="emailError" class="error-message">{{ emailError }}</div>
+  </div>
+  
+  <button pButton label="Login" (click)="login()"></button>
+</div>

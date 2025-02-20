@@ -7,7 +7,6 @@
   display: flex;
   flex-wrap: wrap;
   margin: -0.5rem;
-   /* This ensures the grid fills the full viewport height */
 }
 
 .grid1{
