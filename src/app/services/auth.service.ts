@@ -12,5 +12,9 @@ export class AuthService {
     return this.http.post(`${AUTH_URL}/login`, { name, email }, { withCredentials: true });
     //return this.http.post('https://frontend-take-home-service.fetch.com/auth/login', { name, email }, { withCredentials: true });
   }
+
+  logout(): Observable<any> {
+    return this.http.post(`${AUTH_URL}/logout`, {}, { withCredentials: true });
+  }
 }
 
