@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'app-search',
@@ -28,7 +29,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
     DialogModule,
     SliderModule,
     MultiSelectModule,
-    DogCardComponent
+    DogCardComponent,
+    NavbarComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'

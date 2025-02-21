@@ -19,7 +19,6 @@ export class LogoutComponent {
       },
       error: (error) => {
         console.error('Logout error:', error);
-        // Still navigate to login page even if there's an error
         this.router.navigate(['/login']);
       }
     });
