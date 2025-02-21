@@ -20,7 +20,7 @@
 
 /* Left Sidebar for Filters */
 .filters-sidebar {
-  width: 500px;
+  width: 400px;
   transition: all 0.3s ease;
   flex-shrink: 0;
   height: 100%;
@@ -29,8 +29,7 @@
 }
 
 .filters-sidebar.collapsed {
-  width: 0;
-  overflow: hidden;
+  width: 60px; /* Just enough width to show the toggle button */
 }
 
 .filters-card {
@@ -46,7 +45,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.25rem 1.5rem;
-  border-bottom: 1px solid #e9ecef;
+  /* border-bottom: 1px solid #e9ecef; */
 }
 
 .filters-header h3 {
@@ -73,6 +72,10 @@
   margin-bottom: 0.75rem;
 }
 
+.filters-sidebar.collapsed .filters-content,
+.filters-sidebar.collapsed .filters-header h3 {
+  display: none;
+}
 /* Main Content Area */
 .main-content {
   flex-grow: 1;
@@ -90,9 +93,9 @@
 
 /* Control Bar */
 .control-bar {
-  background-color: white;
+  /* background-color: white; */
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); */
   padding: 1rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -189,8 +192,7 @@
   .p-dropdown,
   .p-multiselect {
     width: 100% !important;
-    min-width: 200px !important;
-    max-width: 100% !important;
+    height: 40px !important;
   }
   
   .p-card {
@@ -200,17 +202,14 @@
   
   .p-dropdown .p-dropdown-label,
   .p-multiselect .p-multiselect-label {
-
-    width: 100% !important; /* Ensure full width */
-    min-width: 200px !important; /* Optional: Adjust as needed */
-  
-    padding: 0.5rem 0.75rem !important; /* Added for consistent padding */
-    font-size: 0.95rem !important; /* Added for consistent font size */
+    height: 40px !important;
+    line-height: 40px !important;
+    padding: 0 0.75rem !important;
   }
 
   .p-dropdown-panel,
   .p-multiselect-panel {
-    min-width: 200px !important;
+    width: 100% !important;
   }
 
 
