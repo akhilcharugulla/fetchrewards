@@ -1,12 +1,19 @@
-<div class="container">
-  <div class="grid">
+<div class="search-container">
+  <!-- Main grid layout -->
+  <div class="search-grid">
     <!-- Left Sidebar for Filters -->
-    <div class="col-12 md:col-3 sidebar grid1"  [class.collapsed]="!showFilters">
-      <p-card styleClass="h-full">
-        <div class="filter-header mb-4">
-          <h3 class="text-xl font-semibold m-0">Filters</h3>
+    <div class="filters-sidebar" [ngClass]="{'collapsed': !showFilters}">
+      <div class="filters-card">
+        <div class="filters-header">
+          <h3>Filters</h3>
+
+        <!-- Left side - Filter toggle -->
+        <div class="filter-toggle" (click)="toggleFilters()">
+          <i class="pi pi-bars"></i>
         </div>
-        <div class="filters-container">
+        </div>
+        
+        <div class="filters-content">
           <!-- Breeds Filter -->
           <div class="filter-group">
             <h4 class="filter-label">Breeds</h4>
@@ -19,6 +26,7 @@
               styleClass="w-full"
             ></p-multiSelect>
           </div>
+          
           <!-- Age Filter -->
           <div class="filter-group">
             <h4 class="filter-label">Age</h4>
@@ -30,6 +38,7 @@
               styleClass="w-full"
             ></p-dropdown>
           </div>
+          
           <!-- Zipcodes Filter -->
           <div class="filter-group">
             <h4 class="filter-label">Zipcodes</h4>
@@ -41,6 +50,7 @@
               styleClass="w-full"
             ></p-multiSelect>
           </div>
+          
           <!-- Cities Filter -->
           <div class="filter-group">
             <h4 class="filter-label">Cities</h4>
@@ -53,23 +63,16 @@
             ></p-multiSelect>
           </div>
         </div>
-      </p-card>
+      </div>
     </div>
 
-    <!-- Main Content for Dog Cards -->
-    <div class="col-12" [class.md:col-9]="showFilters" [class.md:col-12]="!showFilters">
-      <!-- Filter Icon and Sort By in the Same Line -->
-      <div class="mb-3 flex justify-content-between align-items-center control-bar">
-        <!-- Filter Icon and Text (Left Side) -->
-        <div class="flex align-items-center gap-2 filter-toggle" (click)="toggleFilters()">
-          <i class="pi pi-bars filter-icon"></i>
-          <span class="filter-text">
-            {{ !showFilters ? 'Show Filters' : 'Hide Filters' }}
-          </span>
-        </div>
-
-        <!-- Sort By and Find Match Button (Right Side) -->
-        <div class="flex align-items-center controls-group">
+    <!-- Main Content Area -->
+    <div class="main-content" [ngClass]="{'full-width': !showFilters}">
+      <!-- Control Bar -->
+      <div class="control-bar">
+        
+        <!-- Right side - Sort and Find Match -->
+        <div class="controls-right">
           <p-dropdown
             [options]="sortOptions"
             [(ngModel)]="sortField"
@@ -77,20 +80,20 @@
             (onChange)="onSortChange($event)"
             styleClass="sort-dropdown"
           ></p-dropdown>
+          
           <p-button
             *ngIf="favorites.length > 0"
             label="Find Match"
             icon="pi pi-heart"
             (onClick)="findMatch()"
-            styleClass="find-match-btn"
+            styleClass="match-button"
           ></p-button>
         </div>
       </div>
 
-      <!-- Dog Cards Grid -->
-      <div class="grid">
-        <div *ngFor="let dog of dogs" 
-             class="col-12 md:col-6 lg:col-4 xl:col-3 mb-3">
+      <!-- Dogs Grid -->
+      <div class="dogs-grid">
+        <div class="dog-card-wrapper" *ngFor="let dog of dogs">
           <app-dog-card
             [dog]="dog"
             [isFavorite]="isFavorite(dog)"
@@ -102,11 +105,13 @@
       </div>
 
       <!-- Paginator -->
-      <p-paginator
-        [rows]="12"
-        [totalRecords]="totalDogs"
-        (onPageChange)="onPageChange($event)"
-      ></p-paginator>
+      <div class="pagination-container">
+        <p-paginator
+          [rows]="12"
+          [totalRecords]="totalDogs"
+          (onPageChange)="onPageChange($event)"
+        ></p-paginator>
+      </div>
     </div>
   </div>
 </div>
@@ -118,7 +123,7 @@
   [modal]="true"
   [style]="{width: '90vw', maxWidth: '500px'}"
 >
-  <div *ngIf="matchedDog" class="text-center">
+  <div *ngIf="matchedDog" class="match-dialog-content">
     <app-dog-card
       [dog]="matchedDog"
       [isFavorite]="true"

@@ -17,15 +17,22 @@ import { MultiSelectModule } from 'primeng/multiselect';
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [FormsModule,CommonModule, CardModule,DropdownModule,DataViewModule,ButtonModule,PaginatorModule,DialogModule,SliderModule,MultiSelectModule,
-    DogCardComponent],
+  imports: [
+    FormsModule,
+    CommonModule, 
+    CardModule,
+    DropdownModule,
+    DataViewModule,
+    ButtonModule,
+    PaginatorModule,
+    DialogModule,
+    SliderModule,
+    MultiSelectModule,
+    DogCardComponent
+  ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
 })
-
-
-
-
 export class SearchComponent implements OnInit {
   dogIds: any[] = [];
   breeds: string[] = [];
@@ -40,12 +47,10 @@ export class SearchComponent implements OnInit {
   matchedDog: Dog | null = null;
   currentPage: number = 0;
   showFilters: boolean = true;
-  filtersHidden: boolean = true;
-  locationOptions:any[] = [];
+  filtersHidden: boolean = false;
+  locationOptions: any[] = [];
   dogLocations: Map<string, Location> = new Map();
   userLocation: GeolocationPosition | null = null;
-
-
 
   ageOptions = [
     { label: 'Select Age', value: null },
@@ -55,7 +60,6 @@ export class SearchComponent implements OnInit {
     { label: 'Senior (8+ years)', value: { min: 8, max: 20 } }
   ];
 
-
   sortOptions = [
     { label: 'Breed (A-Z)', value: 'breed:asc' },
     { label: 'Breed (Z-A)', value: 'breed:desc' },
@@ -64,28 +68,26 @@ export class SearchComponent implements OnInit {
     { label: 'Age (Youngest)', value: 'age:asc' },
     { label: 'Age (Oldest)', value: 'age:desc' }
   ];
+  
   results: any[] = [];
-  locationInput = ''; // User input for city/state/ZIP
-  milesInput = 100; // Default search radius
-  selectedZipCode:any = [];
-  selectedCities: any = []
-  zipCodes:any[] = [];
+  locationInput = ''; 
+  milesInput = 100; 
+  selectedZipCode: any = [];
+  selectedCities: any = [];
+  zipCodes: any[] = [];
   cities: any[] = [];
-
 
   constructor(
     private dogService: DogService,
     private messageService: MessageService,
-    private locationService:LocationService
+    private locationService: LocationService
   ) {}
-
 
   ngOnInit() {
     this.loadBreeds();
     this.search();
-    this.searchLocations()
+    this.searchLocations();
   }
-
 
   onPageChange(event: any) {
     this.currentPage = event.page;
@@ -98,7 +100,6 @@ export class SearchComponent implements OnInit {
     });
   }
 
-
   search() {
     const params: any = {
       breeds: this.selectedBreeds,
@@ -108,15 +109,12 @@ export class SearchComponent implements OnInit {
       from: this.currentPage * 12
     };
 
-
     if (this.selectedAge) {
       params.ageMin = this.selectedAge.min;
       params.ageMax = this.selectedAge.max;
     }
 
-
     this.dogService.searchDogs(params).subscribe(response => {
-      console.log(response)
       this.dogs = response.dogs;
       this.totalDogs = response.total;
       this.loadDogLocations(this.dogs);
@@ -159,9 +157,8 @@ export class SearchComponent implements OnInit {
 
   toggleFilters() {
     this.showFilters = !this.showFilters;
-    this.filtersHidden = !this.filtersHidden;
+    this.filtersHidden = !this.showFilters;
   }
-
 
   onSortChange(event: any) {
     const [field, order] = event.value.split(':');
@@ -169,7 +166,6 @@ export class SearchComponent implements OnInit {
     this.sortOrder = order === 'asc' ? 1 : -1;
     this.search();
   }
-
 
   toggleFavorite(dog: Dog) {
     const index = this.favorites.findIndex(f => f.id === dog.id);
@@ -190,11 +186,9 @@ export class SearchComponent implements OnInit {
     }
   }
 
-
   isFavorite(dog: Dog): boolean {
     return this.favorites.some(f => f.id === dog.id);
   }
-
 
   findMatch() {
     if (this.favorites.length === 0) {
@@ -206,7 +200,6 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-
     const favoriteIds = this.favorites.map(dog => dog.id);
     this.dogService.getMatch(favoriteIds).subscribe(matchId => {
       const matchedDog = this.favorites.find(dog => dog.id === matchId);
@@ -216,6 +209,7 @@ export class SearchComponent implements OnInit {
       }
     });
   }
+  
   searchLocations() {
     this.locationService.searchLocations({}).subscribe(
       (data) => {
@@ -226,13 +220,13 @@ export class SearchComponent implements OnInit {
         });
  
         // Extract unique cities and zip codes
-        this.cities = Array.from(uniqueLocations.keys()); // Get all unique cities
-        this.zipCodes = Array.from(uniqueLocations.values()); // Get all unique zip codes
+        this.cities = Array.from(uniqueLocations.keys()); 
+        this.zipCodes = Array.from(uniqueLocations.values()); 
  
         // Create locationOptions array
         this.locationOptions = Array.from(uniqueLocations, ([city, zip_code]) => ({
-          label: city,   // City as label
-          value: zip_code // Zip code as value
+          label: city,   
+          value: zip_code 
         }));
       },
       (error) => {
@@ -240,6 +234,4 @@ export class SearchComponent implements OnInit {
       }
     );
   }
- 
- 
 }

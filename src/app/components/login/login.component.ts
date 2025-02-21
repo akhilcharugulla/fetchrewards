@@ -69,7 +69,11 @@ export class LoginComponent {
       },
       error: (err) => {
         console.log(err);
-        this.router.navigate(['/search']);
+        if(err.status== "200"){
+          this.router.navigate(['/search']);
+        }else{
+          this.emailError = "Enter valid Email";
+        }
       },
       complete: () => {
         this.isLoading = false;
