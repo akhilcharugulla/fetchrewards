@@ -88,7 +88,7 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  height: 95%;
+  height: 94%;
   transition: all 0.3s ease;
   padding: 0;
   background-color: #f8f9fa;
@@ -147,6 +147,45 @@
   padding: 0rem 1.5rem;
   overflow-y: auto;
   flex-grow: 1;
+}
+
+.match-dialog-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.match-result {
+  text-align: center;
+  width: 100%;
+}
+
+.match-title {
+  color: #2196F3;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.match-card {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+:host ::ng-deep .p-dialog {
+  .p-dialog-header {
+    background: #2196F3;
+    color: white;
+  }
+  
+  .p-dialog-header-icon {
+    color: white;
+  }
+  
+  .p-dialog-content {
+    background: #f8f9fa;
+  }
 }
 
 @media (max-width: 1400px) {

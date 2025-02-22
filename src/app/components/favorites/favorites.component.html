@@ -1,7 +1,47 @@
 <div class="favorites">
-    <h2>Favorite Dogs</h2>
-    <div class="dog-list">
-      <app-dog-card *ngFor="let dog of favoriteDogs" [dog]="dog"></app-dog-card>
-    </div>
-    <button pButton label="Find Match" (click)="findMatch()"></button>
+  <div class="back-button-container">
+  <button 
+  (click)="goBack()" 
+  class="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+>
+  <i class="pi pi-arrow-left"></i>
+  <span>Back to Search</span>
+</button>
+
   </div>
+  <h2>Favorite Dogs</h2>
+  
+  <div class="dogs-grid">
+    <div class="dog-card-wrapper" *ngFor="let dog of favoriteDogs">
+      <app-dog-card
+        [dog]="dog"
+        [isFavorite]="true"
+        (favoriteToggle)="toggleFavorite($event)"
+      ></app-dog-card>
+    </div>
+  </div>
+
+  <div class="match-controls" *ngIf="favoriteDogs.length > 0">
+    <p-button
+      label="Find Match"
+      icon="pi pi-heart"
+      (onClick)="findMatch()"
+      styleClass="match-button"
+    ></p-button>
+  </div>
+</div>
+
+<p-dialog
+  [(visible)]="showMatchDialog"
+  header="Your Perfect Match!"
+  [modal]="true"
+  [style]="{width: '90vw', maxWidth: '500px'}"
+>
+  <div *ngIf="matchedDog" class="match-dialog-content">
+    <app-dog-card
+      [dog]="matchedDog"
+      [isFavorite]="true"
+      (favoriteToggle)="toggleFavorite($event)"
+    ></app-dog-card>
+  </div>
+</p-dialog>

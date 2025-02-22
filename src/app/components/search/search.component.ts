@@ -14,6 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { FavouritesService } from '../../services/favourites.service';
 
 @Component({
   selector: 'app-search',
@@ -82,7 +83,8 @@ export class SearchComponent implements OnInit {
   constructor(
     private dogService: DogService,
     private messageService: MessageService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private favoritesService: FavouritesService
   ) {}
 
   ngOnInit() {
@@ -170,30 +172,20 @@ export class SearchComponent implements OnInit {
   }
 
   toggleFavorite(dog: Dog) {
-    const index = this.favorites.findIndex(f => f.id === dog.id);
-    if (index === -1) {
-      this.favorites.push(dog);
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Added to Favorites',
-        detail: `${dog.name} has been added to your favorites`
-      });
-    } else {
-      this.favorites.splice(index, 1);
-      this.messageService.add({
-        severity: 'info',
-        summary: 'Removed from Favorites',
-        detail: `${dog.name} has been removed from your favorites`
-      });
-    }
+    this.favoritesService.toggleFavorite(dog);
   }
 
   isFavorite(dog: Dog): boolean {
-    return this.favorites.some(f => f.id === dog.id);
+    return this.favoritesService.isFavorite(dog);
+  }
+
+  onMatchClick() {
+    this.findMatch();
   }
 
   findMatch() {
-    if (this.favorites.length === 0) {
+    const favorites = this.favoritesService.getFavorites();
+    if (favorites.length === 0) {
       this.messageService.add({
         severity: 'warn',
         summary: 'No Favorites',
@@ -202,12 +194,33 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    const favoriteIds = this.favorites.map(dog => dog.id);
-    this.dogService.getMatch(favoriteIds).subscribe(matchId => {
-      const matchedDog = this.favorites.find(dog => dog.id === matchId);
-      if (matchedDog) {
-        this.matchedDog = matchedDog;
-        this.showMatchDialog = true;
+    // Reset matched dog and show dialog immediately
+    this.matchedDog = null;
+    this.showMatchDialog = true;
+
+    const favoriteIds = favorites.map(dog => dog.id);
+    this.dogService.getMatch(favoriteIds).subscribe({
+      next: (matchId) => {
+        const matchedDog = favorites.find(dog => dog.id === matchId);
+        if (matchedDog) {
+          this.matchedDog = matchedDog;
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Match Not Found',
+            detail: 'Unable to find a match at this time'
+          });
+          this.showMatchDialog = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error finding match:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Unable to find a match at this time'
+        });
+        this.showMatchDialog = false;
       }
     });
   }
@@ -235,5 +248,15 @@ export class SearchComponent implements OnInit {
         console.error('Error fetching locations:', error);
       }
     );
+  }
+
+  onSearchBreed(breed: string) {
+    if (breed) {
+      this.selectedBreeds = [breed];
+    } else {
+      this.selectedBreeds = [];
+    }
+    this.currentPage = 0;
+    this.search();
   }
 }

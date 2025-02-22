@@ -1,6 +1,5 @@
 <div class="search-container">
-  <app-navbar></app-navbar>
-  <!-- Main grid layout -->
+  <app-navbar (matchClick)="onMatchClick()" (searchBreed)="onSearchBreed($event)"></app-navbar>  <!-- Main grid layout -->
   <div class="search-grid">
     <!-- Left Sidebar for Filters -->
     <div class="filters-sidebar" [ngClass]="{'collapsed': !showFilters}">
@@ -119,16 +118,26 @@
 
 <!-- Match Dialog -->
 <p-dialog
-  [(visible)]="showMatchDialog"
-  header="Your Perfect Match!"
-  [modal]="true"
-  [style]="{width: '90vw', maxWidth: '500px'}"
->
-  <div *ngIf="matchedDog" class="match-dialog-content">
-    <app-dog-card
-      [dog]="matchedDog"
-      [isFavorite]="true"
-      (favoriteToggle)="toggleFavorite($event)"
-    ></app-dog-card>
-  </div>
-</p-dialog>
+    [(visible)]="showMatchDialog"
+    header="Your Perfect Match!"
+    [modal]="true"
+    [style]="{width: '90vw', maxWidth: '800px'}"
+    [blockScroll]="true"
+  >
+    <div class="match-dialog-content" *ngIf="matchedDog">
+      <div class="match-result">
+        <h3 class="match-title">We found your perfect companion!</h3>
+        <app-dog-card
+          [dog]="matchedDog"
+          [isFavorite]="true"
+          (favoriteToggle)="toggleFavorite($event)"
+          class="match-card"
+        ></app-dog-card>
+      </div>
+    </div>
+    <div class="match-dialog-content" *ngIf="!matchedDog">
+      <div class="match-result">
+        <h3 class="match-title">Looking for your perfect match...</h3>
+      </div>
+    </div>
+  </p-dialog>

@@ -1,5 +1,64 @@
 .favorites {
-    text-align: center;
-    padding: 2rem;
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.dogs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.match-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+h2 {
+  text-align: center;
+  color: #343a40;
+  margin-bottom: 2rem;
+}
+
+.match-dialog-content {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.back-button-container {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1400px) {
+  .dogs-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .dogs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .dogs-grid {
+    grid-template-columns: 1fr;
   }
   
+  .favorites {
+    padding: 1rem;
+  }
+}
