@@ -13,6 +13,7 @@
         (onSelect)="onSearch($event)"
         placeholder="Search for paw friends..."
         [showClear]="true"
+        [dropdown]="true"
         (onClear)="clearSearch()"
       >
         <ng-template let-breed pTemplate="item">

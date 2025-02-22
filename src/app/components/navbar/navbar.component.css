@@ -73,9 +73,34 @@
   box-shadow: 0 0 0 4px rgba(33, 150, 243, 0.15);
 }
 
-/* Remove dropdown arrow */
+/* Style the dropdown button */
 :host ::ng-deep .p-autocomplete .p-autocomplete-dropdown {
-  display: none;
+  position: absolute;
+  right: 0;
+  border: none;
+  background: transparent;
+  padding: 0.75rem;
+  color: #666;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .p-autocomplete .p-autocomplete-dropdown:hover {
+  color: #2196F3;
+  background: rgba(33, 150, 243, 0.1);
+}
+
+:host ::ng-deep .p-autocomplete .p-autocomplete-dropdown:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+:host ::ng-deep .p-autocomplete .p-autocomplete-dropdown .p-button-icon {
+  font-size: 1rem;
+}
+
+/* Adjust input padding for dropdown button */
+:host ::ng-deep .p-autocomplete.p-autocomplete-dd .p-autocomplete-input {
+  padding-right: 3rem;
 }
 
 :host ::ng-deep .p-autocomplete-panel {
@@ -158,7 +183,7 @@
 /* Clear button styles */
 :host ::ng-deep .p-autocomplete .p-autocomplete-clear-icon {
   color: #666;
-  right: 16px;
+  right: 48px; /* Adjusted for dropdown button */
   transition: all 0.2s ease;
 }
 
