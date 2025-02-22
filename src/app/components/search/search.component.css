@@ -63,7 +63,7 @@
 }
 
 .filters-content {
-  padding: 1.5rem;
+  padding: 0rem 1.5rem;
   overflow-y: auto;
   flex-grow: 1;
 }
@@ -224,8 +224,8 @@
 
 /* Pagination Container */
 .pagination-container {
-  background-color: white;
-  border-top: 1px solid #e9ecef;
+  /* background-color: white;
+  border-top: 1px solid #e9ecef; */
 }
 
 /* Match Dialog */
