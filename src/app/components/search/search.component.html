@@ -71,6 +71,17 @@
       <!-- Control Bar -->
       <div class="control-bar">
         
+                <!-- Breed Chips -->
+                <div class="breed-chips" *ngIf="selectedBreeds.length > 0">
+                  <p-chip 
+                    *ngFor="let breed of selectedBreeds"
+                    [label]="breed"
+                    [removable]="true"
+                    (onRemove)="removeBreed(breed)"
+                    class="mr-2"
+                  ></p-chip>
+                </div>
+                
         <!-- Right side - Sort and Find Match -->
         <div class="controls-right">
           <p-button

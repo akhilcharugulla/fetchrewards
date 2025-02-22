@@ -113,8 +113,8 @@
 }
 
 .favorite-icon.favorited {
-  background: linear-gradient(135deg, #FF6B6B 0%, #FF4785 100%);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  background: #f06292 ;
+  box-shadow: 0 4px 15px rgba(255, 107, 223, 0.4);
 }
 
 .favorite-icon:hover {

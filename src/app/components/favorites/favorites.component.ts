@@ -9,6 +9,7 @@ import { MessageService } from 'primeng/api';
 import { Dog } from '../../services/dog.service';
 import { FavouritesService } from '../../services/favourites.service';
 import { Router } from '@angular/router';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-favorites',
@@ -18,7 +19,8 @@ import { Router } from '@angular/router';
     FormsModule,
     DialogModule,
     ButtonModule,
-    DogCardComponent
+    DogCardComponent,
+    ChipModule
   ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'
@@ -27,6 +29,7 @@ export class FavoritesComponent implements OnInit {
   favoriteDogs: Dog[] = [];
   showMatchDialog: boolean = false;
   matchedDog: Dog | null = null;
+  showEmptyState: boolean = false;
 
   constructor(
     private favoritesService: FavouritesService,
@@ -36,13 +39,17 @@ export class FavoritesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.favoritesService.favorites$.subscribe(
-      favorites => this.favoriteDogs = favorites
-    );
+    this.loadFavorites();
+  }
+
+  loadFavorites() {
+    this.favoriteDogs = this.favoritesService.getFavorites();
+    this.showEmptyState = this.favoriteDogs.length === 0;
   }
 
   toggleFavorite(dog: Dog) {
     this.favoritesService.toggleFavorite(dog);
+    this.loadFavorites();
   }
 
   findMatch() {
@@ -66,6 +73,10 @@ export class FavoritesComponent implements OnInit {
   }
 
   goBack() {
+    this.router.navigate(['/search']);
+  }
+
+  goToSearch() {
     this.router.navigate(['/search']);
   }
 }

@@ -1,17 +1,33 @@
 <div class="favorites">
   <div class="back-button-container">
-  <button 
-  (click)="goBack()" 
-  class="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
->
-  <i class="pi pi-arrow-left"></i>
-  <span>Back to Search</span>
-</button>
-
+    <button 
+      (click)="goBack()" 
+      class="back-button"
+    >
+      <i class="pi pi-arrow-left"></i>
+      <span>Back to Search</span>
+    </button>
   </div>
-  <h2>Favorite Dogs</h2>
   
-  <div class="dogs-grid">
+  <h2>Favorite Dogs</h2>
+
+  <!-- Empty state message -->
+  <div *ngIf="showEmptyState" class="empty-state">
+    <div class="empty-state-content">
+      <i class="pi pi-heart-fill"></i>
+      <h3>No Favorites Yet</h3>
+      <p>Start adding dogs to your favorites to see them here!</p>
+      <button 
+        pButton 
+        label="Browse Dogs" 
+        icon="pi pi-search" 
+        (click)="goToSearch()" 
+        class="p-button-primary browse-button"
+      ></button>
+    </div>
+  </div>
+  
+  <div class="dogs-grid" *ngIf="!showEmptyState">
     <div class="dog-card-wrapper" *ngFor="let dog of favoriteDogs">
       <app-dog-card
         [dog]="dog"

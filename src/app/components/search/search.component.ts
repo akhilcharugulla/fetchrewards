@@ -15,6 +15,7 @@ import { SliderModule } from 'primeng/slider';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FavouritesService } from '../../services/favourites.service';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-search',
@@ -31,7 +32,8 @@ import { FavouritesService } from '../../services/favourites.service';
     SliderModule,
     MultiSelectModule,
     DogCardComponent,
-    NavbarComponent
+    NavbarComponent,
+    ChipModule
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
@@ -102,6 +104,12 @@ export class SearchComponent implements OnInit {
     this.dogService.getBreeds().subscribe(breeds => {
       this.breeds = breeds;
     });
+  }
+
+  removeBreed(breed: string) {
+    this.selectedBreeds = this.selectedBreeds.filter(b => b !== breed);
+    this.currentPage = 0;
+    this.search();
   }
 
   search() {
