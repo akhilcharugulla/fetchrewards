@@ -4,26 +4,28 @@
     <span>🐾 PawFinder</span>
   </div>
   <div class="search-container">
-    <p-autoComplete
-      [(ngModel)]="searchQuery"
-      [suggestions]="filteredBreeds"
-      (completeMethod)="filterBreeds($event)"
-      (onSelect)="onSearch($event)"
-      placeholder="Search for Breeds..."
-      [dropdown]="true"
-      [showClear]="true"
-      (onClear)="clearSearch()"
-    >
-      <ng-template let-breed pTemplate="item">
-        <div class="search-item">
-          <i class="pi pi-search"></i>
-          <span>{{breed}}</span>
-        </div>
-      </ng-template>
-    </p-autoComplete>
+    <div class="search-wrapper">
+      <i class="pi pi-search search-icon"></i>
+      <p-autoComplete
+        [(ngModel)]="searchQuery"
+        [suggestions]="filteredBreeds"
+        (completeMethod)="filterBreeds($event)"
+        (onSelect)="onSearch($event)"
+        placeholder="Search for paw friends..."
+        [showClear]="true"
+        (onClear)="clearSearch()"
+      >
+        <ng-template let-breed pTemplate="item">
+          <div class="search-item">
+            <i class="pi pi-paw"></i>
+            <span class="breed-name">{{breed}}</span>
+          </div>
+        </ng-template>
+      </p-autoComplete>
+    </div>
   </div>
   <div class="nav-links">
-    <button pButton type="button" class="p-button-text" label="Favorites" icon="pi pi-heart" (click)="navigate('/favorites')"></button>
+    <button pButton type="button" class="p-button-text" label="Favorites" icon="pi pi-heart"></button>
     <button 
       pButton 
       type="button" 
