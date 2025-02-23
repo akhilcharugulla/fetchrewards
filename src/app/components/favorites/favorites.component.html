@@ -31,6 +31,7 @@
     <div class="dog-card-wrapper" *ngFor="let dog of favoriteDogs">
       <app-dog-card
       *ngIf="dog; else skeletonLoader"
+        [location]="dogLocations.get(dog.zip_code)"
         [dog]="dog"
         [isFavorite]="true"
         (favoriteToggle)="toggleFavorite($event)"
@@ -56,9 +57,10 @@
 >
   <div *ngIf="matchedDog" class="match-dialog-content">
     <app-dog-card
-    *ngIf="dog; else skeletonLoader"
+    *ngIf="matchedDog; else skeletonLoader"
       [dog]="matchedDog"
       [isFavorite]="true"
+      [location]="dogLocations.get(matchedDog.zip_code)"
       (favoriteToggle)="toggleFavorite($event)"
     ></app-dog-card>
   </div>

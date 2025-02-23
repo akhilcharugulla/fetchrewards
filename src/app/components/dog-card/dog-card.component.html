@@ -6,10 +6,11 @@
       </ng-container>
       <ng-template #loadingSkeleton>
         <p-skeleton height="200px"></p-skeleton>
-      </ng-template>      <span
+      </ng-template>
+        <span
         class="favorite-icon"
         [ngClass]="{ favorited: isFavorite, 'not-favorited': !isFavorite }"
-        (click)="onFavoriteClick()"
+        (click)="onFavoriteClick($event)"
       >
         <i class="pi" [ngClass]="isFavorite ? 'pi-heart-fill' : 'pi-heart'"></i>
       </span>

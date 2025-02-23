@@ -159,6 +159,7 @@
         <app-dog-card
           *ngIf="matchedDog; else skeletonLoader"
           [dog]="matchedDog"
+          [location]="dogLocations.get(matchedDog.zip_code)"
           [isFavorite]="true"
           (favoriteToggle)="toggleFavorite($event)"
           class="match-card"

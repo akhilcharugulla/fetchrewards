@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { ChipModule } from 'primeng/chip';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CardModule } from 'primeng/card';
+import { LocationService, Location } from '../../services/location.service';
 
 @Component({
   selector: 'app-favorites',
@@ -34,12 +35,14 @@ export class FavoritesComponent implements OnInit {
   showMatchDialog: boolean = false;
   matchedDog: Dog | null = null;
   showEmptyState: boolean = false;
+  dogLocations: Map<string, Location> = new Map();
 
   constructor(
     private favoritesService: FavouritesService,
     private dogService: DogService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private locationService: LocationService,
   ) {}
 
   ngOnInit() {
@@ -49,6 +52,7 @@ export class FavoritesComponent implements OnInit {
   loadFavorites() {
     this.favoriteDogs = this.favoritesService.getFavorites();
     this.showEmptyState = this.favoriteDogs.length === 0;
+    this.loadDogLocations(this.favoriteDogs)
   }
 
   toggleFavorite(dog: Dog) {
@@ -84,4 +88,18 @@ export class FavoritesComponent implements OnInit {
   goToSearch() {
     this.router.navigate(['/search']);
   }
+
+  loadDogLocations(dogs: Dog[]) {
+    const zipCodes = [...new Set(dogs.map(dog => dog.zip_code))];
+    
+    this.locationService.getLocations(zipCodes).subscribe(
+      (locations) => {
+        this.dogLocations.clear();
+        locations.forEach(loc => this.dogLocations.set(loc.zip_code, loc));
+        //this.calculateDistances();
+      },
+      (error) => console.error('Error loading dog locations:', error)
+    );
+  }
+
 }

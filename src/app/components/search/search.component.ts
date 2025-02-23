@@ -164,32 +164,32 @@ export class SearchComponent implements OnInit {
       (locations) => {
         this.dogLocations.clear();
         locations.forEach(loc => this.dogLocations.set(loc.zip_code, loc));
-        this.calculateDistances();
+        //this.calculateDistances();
       },
       (error) => console.error('Error loading dog locations:', error)
     );
   }
 
-  calculateDistances() {
-    if (!this.userLocation) return;
+  // calculateDistances() {
+  //   if (!this.userLocation) return;
 
-    const userLat = this.userLocation.coords.latitude;
-    const userLon = this.userLocation.coords.longitude;
+  //   const userLat = this.userLocation.coords.latitude;
+  //   const userLon = this.userLocation.coords.longitude;
 
-    this.dogs = this.dogs.map(dog => {
-      const location = this.dogLocations.get(dog.zip_code);
-      if (location) {
-        const distance = this.locationService.calculateDistance(
-          userLat,
-          userLon,
-          location.latitude,
-          location.longitude
-        );
-        return { ...dog, distance };
-      }
-      return dog;
-    });
-  }
+  //   this.dogs = this.dogs.map(dog => {
+  //     const location = this.dogLocations.get(dog.zip_code);
+  //     if (location) {
+  //       const distance = this.locationService.calculateDistance(
+  //         userLat,
+  //         userLon,
+  //         location.latitude,
+  //         location.longitude
+  //       );
+  //       return { ...dog, distance };
+  //     }
+  //     return dog;
+  //   });
+  // }
 
   onActiveIndexChange(event: number) {
     this.activeIndex = event;

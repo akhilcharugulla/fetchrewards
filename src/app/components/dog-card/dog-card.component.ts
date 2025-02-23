@@ -21,7 +21,8 @@ export class DogCardComponent {
   @Output() favoriteToggle = new EventEmitter<Dog>();
   @Output() imageClick = new EventEmitter<Dog>();
 
-  onFavoriteClick() {
+  onFavoriteClick(event: Event) {
+    event.stopPropagation();
     this.favoriteToggle.emit(this.dog);
   }
   
