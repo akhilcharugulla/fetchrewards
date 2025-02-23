@@ -170,13 +170,6 @@
   flex-grow: 1;
 }
 
-/* .match-dialog-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-} */
-
 .match-result {
   text-align: center;
   width: 100%;
@@ -308,23 +301,20 @@
   margin-bottom: 10px;
 }
 
-.galleria-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
-}
-
 
 .galleria-item {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 450px;
+  width: 500px;
+  overflow: hidden;
 }
 
 .galleria-item img {
   max-height: 500px;
+  width: 100%;
+  height: 90%;
   object-fit: contain;
 }
 
