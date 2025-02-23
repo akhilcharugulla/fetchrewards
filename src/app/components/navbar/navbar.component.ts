@@ -8,6 +8,8 @@ import { FavouritesService } from '../../services/favourites.service';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DogService } from '../../services/dog.service';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-navbar',
@@ -16,7 +18,8 @@ import { DogService } from '../../services/dog.service';
     ButtonModule, 
     CommonModule, 
     FormsModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    ToastModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
@@ -32,7 +35,8 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private favouritesService: FavouritesService,
-    private dogService: DogService
+    private dogService: DogService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -68,6 +72,34 @@ export class NavbarComponent implements OnInit {
       error: () => this.router.navigate(['/login'])
     });
   }
+
+  onMatchClick() {
+    if (this.hasMatches) {
+      this.matchClick.emit();
+    } else {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'No Favorites',
+        detail: 'Please favorite an item to get a match.',
+        life: 5000
+      });
+    }
+  }
+
+  getProgressBarClass(severity: string): string {
+    switch (severity) {
+      case 'success':
+        return 'success';
+      case 'warn':
+        return 'warn';
+      case 'error':
+        return 'error';
+      case 'info':
+      default:
+        return 'info';
+    }
+  }
+  
   navigate(path: string) {
     this.router.navigate([path]);
   }

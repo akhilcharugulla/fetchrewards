@@ -16,6 +16,8 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { FavouritesService } from '../../services/favourites.service';
 import { ChipModule } from 'primeng/chip';
+import { GalleriaModule } from 'primeng/galleria';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-search',
@@ -33,7 +35,9 @@ import { ChipModule } from 'primeng/chip';
     MultiSelectModule,
     DogCardComponent,
     NavbarComponent,
-    ChipModule
+    ChipModule,
+    GalleriaModule,
+    TooltipModule,
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
@@ -56,6 +60,9 @@ export class SearchComponent implements OnInit {
   locationOptions: any[] = [];
   dogLocations: Map<string, Location> = new Map();
   userLocation: GeolocationPosition | null = null;
+  showGalleria: boolean = false;
+  selectedDogImages: string[] = [];
+  selectedDog: Dog | null = null;
 
   ageOptions = [
     { label: 'Select Age', value: null },
@@ -167,9 +174,31 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  openGalleria(dog: Dog) {
+    this.selectedDog = dog;
+    // Create an array of 5 duplicate images for the demo
+    this.selectedDogImages = Array(5).fill(dog.img);
+    this.showGalleria = true;
+  }
+
+  closeGalleria() {
+    this.showGalleria = false;
+    this.selectedDog = null;
+  }
+
+  isSelectedDogFavorite(): boolean {
+    return this.selectedDog ? this.isFavorite(this.selectedDog) : false;
+  }
+
+  toggleFavoriteInGalleria() {
+    if (this.selectedDog) {
+      this.toggleFavorite(this.selectedDog);
+    }
+  }
+  
   toggleFilters() {
     this.showFilters = !this.showFilters;
-    this.filtersHidden = !this.showFilters;
+    //this.filtersHidden = !this.showFilters;
   }
 
   onSortChange(event: any) {
@@ -197,7 +226,8 @@ export class SearchComponent implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'No Favorites',
-        detail: 'Please add some dogs to your favorites first'
+        detail: 'Please add some dogs to your favorites first',
+        life: 5000
       });
       return;
     }
@@ -216,7 +246,8 @@ export class SearchComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Match Not Found',
-            detail: 'Unable to find a match at this time'
+            detail: 'Unable to find a match at this time',
+            life: 5000
           });
           this.showMatchDialog = false;
         }
@@ -226,7 +257,8 @@ export class SearchComponent implements OnInit {
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
-          detail: 'Unable to find a match at this time'
+          detail: 'Unable to find a match at this time',
+          life: 5000
         });
         this.showMatchDialog = false;
       }
@@ -256,6 +288,16 @@ export class SearchComponent implements OnInit {
         console.error('Error fetching locations:', error);
       }
     );
+  }
+
+  clearFilters() {
+    this.selectedBreeds = [];
+    this.selectedAge = null;
+    this.selectedCities = [];
+    this.currentPage = 0;
+    this.sortField = 'breed';
+    this.sortOrder = 1;
+    this.search();
   }
 
   onSearchBreed(breed: string) {

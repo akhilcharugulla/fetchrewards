@@ -25,6 +25,12 @@
       </p-autoComplete>
     </div>
   </div>
+  <p-toast position="bottom-left">
+    <ng-template let-msg pTemplate="message">
+      <div [innerHtml]="msg.detail"></div>
+      <div class="progress-bar" [ngClass]="getProgressBarClass(msg.severity)"></div>
+    </ng-template>
+  </p-toast>
   <div class="nav-links">
     <button pButton type="button" class="p-button-text" label="Favorites" icon="pi pi-heart" (click)="navigate('/favorites')"></button>
     <button 
@@ -33,8 +39,8 @@
       class="p-button-text" 
       [ngClass]="{'highlight-match': hasMatches}"
       label="Match" 
-      icon="pi pi-star" 
-      (click)="matchClick.emit()"
+      icon="pi pi-star"
+      (click)="onMatchClick()"
     ></button>
     <button pButton type="button" class="p-button-text p-button-danger" icon="pi pi-sign-out" label="Logout" (click)="logout()"></button>
   </div>

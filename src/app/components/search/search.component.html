@@ -81,7 +81,7 @@
                     class="mr-2"
                   ></p-chip>
                 </div>
-                
+
         <!-- Right side - Sort and Find Match -->
         <div class="controls-right">
           <p-button
@@ -103,20 +103,23 @@
       </div>
 
       <!-- Dogs Grid -->
-      <div class="dogs-grid">
-        <div class="dog-card-wrapper" *ngFor="let dog of dogs">
-          <app-dog-card
-            [dog]="dog"
-            [isFavorite]="isFavorite(dog)"
-            [distance]="dog.distance"
-            [location]="dogLocations.get(dog.zip_code)"
-            (favoriteToggle)="toggleFavorite($event)"
-          ></app-dog-card>
+      <ng-container *ngIf="dogs.length > 0; else noResults">
+        <div class="dogs-grid">
+          <div class="dog-card-wrapper" *ngFor="let dog of dogs">
+            <app-dog-card
+              [dog]="dog"
+              [isFavorite]="isFavorite(dog)"
+              [distance]="dog.distance"
+              [location]="dogLocations.get(dog.zip_code)"
+              (favoriteToggle)="toggleFavorite($event)"
+              (imageClick)="openGalleria($event)"
+            ></app-dog-card>
+          </div>
         </div>
-      </div>
+      </ng-container>
 
       <!-- Paginator -->
-      <div class="pagination-container">
+      <div class="pagination-container" *ngIf="dogs.length > 0">
         <p-paginator
           [rows]="12"
           [totalRecords]="totalDogs"
@@ -126,6 +129,20 @@
     </div>
   </div>
 </div>
+
+<ng-template #noResults>
+  <div class="no-results">
+    <i class="pi pi-search no-results-icon"></i>
+    <h3>No Dogs Found</h3>
+    <p>Try adjusting your filters to find more dogs</p>
+    <p-button 
+      label="Clear Filters" 
+      icon="pi pi-filter-slash" 
+      (onClick)="clearFilters()" 
+      styleClass="p-button-outlined mt-3"
+    ></p-button>
+  </div>
+</ng-template>
 
 <!-- Match Dialog -->
 <p-dialog
@@ -152,3 +169,48 @@
       </div>
     </div>
   </p-dialog>
+
+  <!-- Add this at the bottom of your search.component.html, after the match dialog -->
+<p-dialog 
+  [(visible)]="showGalleria" 
+  [modal]="true" 
+  [style]="{width: '90vw', maxWidth: '1000px'}"
+  [showHeader]="false"
+  [dismissableMask]="true"
+  [closeOnEscape]="true"
+>
+  <div class="galleria-container">
+    <p-galleria 
+      [value]="selectedDogImages" 
+      [showThumbnails]="false"
+      [showItemNavigators]="true"
+      [circular]="true"
+      [showIndicators]="true"
+      [containerStyle]="{ 'max-width': '900px', 'margin': 'auto' }"
+      [showIndicatorsOnItem]="true"
+    >
+      <ng-template pTemplate="item" let-item>
+        <div class="galleria-item">
+          <img [src]="item" />
+        </div>
+      </ng-template>
+    </p-galleria>
+
+    <div class="galleria-actions">
+      <p-button 
+        icon="pi pi-heart" 
+        [outlined]="!isSelectedDogFavorite()"
+        (onClick)="toggleFavoriteInGalleria()"
+        class="mr-2"
+        [pTooltip]="isSelectedDogFavorite() ? 'Remove from Favorites' : 'Add to Favorites'"
+      ></p-button>
+      <p-button 
+        icon="pi pi-times" 
+        (onClick)="closeGalleria()" 
+        severity="secondary" 
+        [outlined]="true"
+        pTooltip="Close"
+      ></p-button>
+    </div>
+  </div>
+</p-dialog>

@@ -1,6 +1,6 @@
 <p-card class="dog-card">
   <ng-template pTemplate="header">
-    <div class="dog-image-container">
+    <div class="dog-image-container" (click)="onImageClick()">
       <img [src]="dog.img" [alt]="dog.name" class="dog-image" />
       <span
         class="favorite-icon"

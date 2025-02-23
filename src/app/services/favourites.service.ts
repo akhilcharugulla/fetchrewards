@@ -26,7 +26,8 @@ export class FavouritesService {
       this.messageService.add({
         severity: 'success',
         summary: 'Added to Favorites',
-        detail: `${dog.name} has been added to your favorites`
+        detail: `<b>${dog.name}</b> has been added to your favorites`,
+        life: 5000
       });
     } else {
       const updatedFavorites = currentFavorites.filter(f => f.id !== dog.id);
@@ -34,7 +35,8 @@ export class FavouritesService {
       this.messageService.add({
         severity: 'info',
         summary: 'Removed from Favorites',
-        detail: `${dog.name} has been removed from your favorites`
+        detail: `<b>${dog.name}</b> has been removed from your favorites`,
+        life: 5000,
       });
     }
   }

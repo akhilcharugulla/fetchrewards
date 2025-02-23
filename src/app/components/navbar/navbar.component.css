@@ -31,7 +31,7 @@
 .search-container {
   flex: 1;
   max-width: 500px;
-  margin: 0 2rem;
+  margin: 0 20rem;
   position: relative;
 }
 
@@ -190,6 +190,43 @@
 :host ::ng-deep .p-autocomplete .p-autocomplete-clear-icon:hover {
   color: #f44336;
   transform: scale(1.1);
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  animation: progressBar 5s linear forwards;
+}
+
+.progress-bar.info {
+  background-color: #2196f3;
+}
+
+/* Success (Green) */
+.progress-bar.success {
+  background-color: #4caf50;
+}
+
+/* Warning (Orange) */
+.progress-bar.warn {
+  background-color: #ff9800;
+}
+
+/* Error (Red) */
+.progress-bar.error {
+  background-color: #f44336;
+}
+
+@keyframes progressBar {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
 }
 
 @media (max-width: 768px) {

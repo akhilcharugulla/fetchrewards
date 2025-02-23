@@ -18,8 +18,13 @@ export class DogCardComponent {
   @Input() distance?: number;
   @Input() location?: Location;
   @Output() favoriteToggle = new EventEmitter<Dog>();
+  @Output() imageClick = new EventEmitter<Dog>();
 
   onFavoriteClick() {
     this.favoriteToggle.emit(this.dog);
+  }
+  
+  onImageClick() {
+    this.imageClick.emit(this.dog);
   }
 }

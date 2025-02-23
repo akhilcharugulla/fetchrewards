@@ -57,7 +57,8 @@ export class FavoritesComponent implements OnInit {
       this.messageService.add({
         severity: 'warn',
         summary: 'No Favorites',
-        detail: 'Please add some dogs to your favorites first'
+        detail: 'Please add some dogs to your favorites first',
+        life: 5000
       });
       return;
     }
