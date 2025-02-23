@@ -36,6 +36,7 @@ export class FavoritesComponent implements OnInit {
   matchedDog: Dog | null = null;
   showEmptyState: boolean = false;
   dogLocations: Map<string, Location> = new Map();
+  userLocation: GeolocationPosition | null = null;
 
   constructor(
     private favoritesService: FavouritesService,
@@ -53,6 +54,7 @@ export class FavoritesComponent implements OnInit {
     this.favoriteDogs = this.favoritesService.getFavorites();
     this.showEmptyState = this.favoriteDogs.length === 0;
     this.loadDogLocations(this.favoriteDogs)
+    this.getUserLocation();
   }
 
   toggleFavorite(dog: Dog) {
@@ -100,6 +102,45 @@ export class FavoritesComponent implements OnInit {
       },
       (error) => console.error('Error loading dog locations:', error)
     );
+  }
+
+  
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.userLocation = position;
+          this.calculateDistances(); // Calculate distances once location is available
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }
+
+  calculateDistances() {
+    if (!this.userLocation) return;
+
+    const userLat = this.userLocation.coords.latitude;
+    const userLon = this.userLocation.coords.longitude;
+
+    this.favoriteDogs = this.favoriteDogs.map(dog => {
+      const location = this.dogLocations.get(dog.zip_code);
+      if (location) {
+        const distance = this.locationService.calculateDistance(
+          userLat,
+          userLon,
+          location.latitude,
+          location.longitude
+        );
+        console.log(distance , "miles away")
+        return { ...dog, distance };
+      }
+      return dog;
+    });
   }
 
 }

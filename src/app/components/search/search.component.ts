@@ -63,7 +63,7 @@ export class SearchComponent implements OnInit {
   dogLocations: Map<string, Location> = new Map();
   userLocation: GeolocationPosition | null = null;
   showGalleria: boolean = false;
-  selectedDogImages: string[] = [];
+  selectedDogImages: any[] = [];
   selectedDog: Dog | null = null;
   activeIndex: number = 0;
   responsiveOptions: any[] = [
@@ -117,6 +117,7 @@ export class SearchComponent implements OnInit {
     this.loadBreeds();
     this.search();
     this.searchLocations();
+    this.getUserLocation();
   }
 
   onPageChange(event: any) {
@@ -164,33 +165,52 @@ export class SearchComponent implements OnInit {
       (locations) => {
         this.dogLocations.clear();
         locations.forEach(loc => this.dogLocations.set(loc.zip_code, loc));
-        //this.calculateDistances();
+        this.calculateDistances();
       },
       (error) => console.error('Error loading dog locations:', error)
     );
   }
 
-  // calculateDistances() {
-  //   if (!this.userLocation) return;
+  calculateDistances() {
+    if (!this.userLocation) return;
 
-  //   const userLat = this.userLocation.coords.latitude;
-  //   const userLon = this.userLocation.coords.longitude;
+    const userLat = this.userLocation.coords.latitude;
+    const userLon = this.userLocation.coords.longitude;
 
-  //   this.dogs = this.dogs.map(dog => {
-  //     const location = this.dogLocations.get(dog.zip_code);
-  //     if (location) {
-  //       const distance = this.locationService.calculateDistance(
-  //         userLat,
-  //         userLon,
-  //         location.latitude,
-  //         location.longitude
-  //       );
-  //       return { ...dog, distance };
-  //     }
-  //     return dog;
-  //   });
-  // }
+    this.dogs = this.dogs.map(dog => {
+      const location = this.dogLocations.get(dog.zip_code);
+      if (location) {
+        const distance = this.locationService.calculateDistance(
+          userLat,
+          userLon,
+          location.latitude,
+          location.longitude
+        );
+        console.log(distance , "miles away")
+        return { ...dog, distance };
+      }
+      return dog;
+    });
+  }
 
+
+  getUserLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.userLocation = position;
+          this.calculateDistances(); // Calculate distances once location is available
+        },
+        (error) => {
+          console.error('Error getting user location:', error);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by this browser.');
+    }
+  }
+
+  
   onActiveIndexChange(event: number) {
     this.activeIndex = event;
   }
@@ -202,7 +222,7 @@ export class SearchComponent implements OnInit {
   openGalleria(dog: Dog) {
     this.selectedDog = dog;
     // Create an array of 5 duplicate images for the demo
-    this.selectedDogImages = Array(5).fill(dog.img);
+    this.selectedDogImages = Array(5).fill({img: dog.img, name: dog.name});
     this.showGalleria = true;
     this.activeIndex = 0;
   }
@@ -224,7 +244,6 @@ export class SearchComponent implements OnInit {
   
   toggleFilters() {
     this.showFilters = !this.showFilters;
-    //this.filtersHidden = !this.showFilters;
   }
 
   onSortChange(event: any) {

@@ -180,6 +180,11 @@
   color: #f44336;
 }
 
+:host ::ng-deep .p-button.p-button-text.p-button-fav:hover {
+  background: rgba(244, 67, 54, 0.1);
+  color: #f019e5;
+}
+
 /* Clear button styles */
 :host ::ng-deep .p-autocomplete .p-autocomplete-clear-icon {
   color: #666;

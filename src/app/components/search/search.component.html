@@ -30,13 +30,14 @@
           <!-- Age Filter -->
           <div class="filter-group">
             <h4 class="filter-label">Age</h4>
-            <p-dropdown
+            <p-multiSelect
               [options]="ageOptions"
               [(ngModel)]="selectedAge"
+              [filter]="true"
               placeholder="Select Age"
               (onChange)="search()"
               styleClass="w-full"
-            ></p-dropdown>
+            ></p-multiSelect>
           </div>
           
           <!-- Zipcodes Filter -->
@@ -197,13 +198,16 @@
     (activeIndexChange)="onActiveIndexChange($event)"
   >
     <ng-template pTemplate="item" let-item>
-      <div class="galleria-item">
-        <img [src]="item" />
+      <div class="galleria-item-wrapper">
+        <h2 class="galleria-header">{{ item.name }}</h2>
+        <div class="galleria-item">
+          <img [src]="item.img" />
+        </div>
       </div>
-    </ng-template>
+        </ng-template>
     <ng-template pTemplate="thumbnail" let-item let-index="index">
       <div class="galleria-thumbnail" (click)="onThumbnailClick(index)">
-        <img [src]="item" />
+        <img [src]="item.img" />
       </div>
     </ng-template>
   </p-galleria>
