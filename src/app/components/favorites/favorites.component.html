@@ -30,6 +30,7 @@
   <div class="dogs-grid" *ngIf="!showEmptyState">
     <div class="dog-card-wrapper" *ngFor="let dog of favoriteDogs">
       <app-dog-card
+      *ngIf="dog; else skeletonLoader"
         [dog]="dog"
         [isFavorite]="true"
         (favoriteToggle)="toggleFavorite($event)"
@@ -55,9 +56,21 @@
 >
   <div *ngIf="matchedDog" class="match-dialog-content">
     <app-dog-card
+    *ngIf="dog; else skeletonLoader"
       [dog]="matchedDog"
       [isFavorite]="true"
       (favoriteToggle)="toggleFavorite($event)"
     ></app-dog-card>
   </div>
 </p-dialog>
+
+<ng-template #skeletonLoader>
+  <p-card class="dog-card">
+    <p-skeleton height="200px"></p-skeleton>
+    <div class="dog-info">
+      <p-skeleton width="60%" height="1.5rem"></p-skeleton>
+      <p-skeleton width="80%" height="1rem"></p-skeleton>
+      <p-skeleton width="50%" height="1rem"></p-skeleton>
+    </div>
+  </p-card>
+</ng-template>

@@ -10,6 +10,8 @@ import { Dog } from '../../services/dog.service';
 import { FavouritesService } from '../../services/favourites.service';
 import { Router } from '@angular/router';
 import { ChipModule } from 'primeng/chip';
+import { SkeletonModule } from 'primeng/skeleton';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-favorites',
@@ -20,7 +22,9 @@ import { ChipModule } from 'primeng/chip';
     DialogModule,
     ButtonModule,
     DogCardComponent,
-    ChipModule
+    ChipModule,
+    CardModule,
+    SkeletonModule
   ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'

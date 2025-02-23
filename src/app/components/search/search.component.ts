@@ -18,6 +18,7 @@ import { FavouritesService } from '../../services/favourites.service';
 import { ChipModule } from 'primeng/chip';
 import { GalleriaModule } from 'primeng/galleria';
 import { TooltipModule } from 'primeng/tooltip';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-search',
@@ -38,6 +39,7 @@ import { TooltipModule } from 'primeng/tooltip';
     ChipModule,
     GalleriaModule,
     TooltipModule,
+    SkeletonModule
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'

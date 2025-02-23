@@ -152,3 +152,9 @@
 .dog-card:hover .dog-image-container::after {
   opacity: 0.8;
 }
+
+p-skeleton {
+  display: block;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}

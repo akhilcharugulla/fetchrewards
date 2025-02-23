@@ -4,11 +4,12 @@ import { Dog } from '../../services/dog.service';
 import { Location } from '../../services/location.service';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-dog-card',
   standalone: true,
-  imports: [CardModule, ButtonModule, CommonModule],
+  imports: [CardModule, ButtonModule, CommonModule, SkeletonModule],
   templateUrl: './dog-card.component.html',
   styleUrl: './dog-card.component.css'
 })
