@@ -63,6 +63,21 @@ export class SearchComponent implements OnInit {
   showGalleria: boolean = false;
   selectedDogImages: string[] = [];
   selectedDog: Dog | null = null;
+  activeIndex: number = 0;
+  responsiveOptions: any[] = [
+      {
+          breakpoint: '1024px',
+          numVisible: 5
+      },
+      {
+          breakpoint: '768px',
+          numVisible: 3
+      },
+      {
+          breakpoint: '560px',
+          numVisible: 2
+      }
+  ];
 
   ageOptions = [
     { label: 'Select Age', value: null },
@@ -174,11 +189,20 @@ export class SearchComponent implements OnInit {
     });
   }
 
+  onActiveIndexChange(event: number) {
+    this.activeIndex = event;
+  }
+
+  onThumbnailClick(index: number) {
+    this.activeIndex = index;
+  }
+
   openGalleria(dog: Dog) {
     this.selectedDog = dog;
     // Create an array of 5 duplicate images for the demo
     this.selectedDogImages = Array(5).fill(dog.img);
     this.showGalleria = true;
+    this.activeIndex = 0;
   }
 
   closeGalleria() {

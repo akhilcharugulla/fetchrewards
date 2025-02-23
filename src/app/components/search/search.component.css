@@ -331,19 +331,21 @@
   border-radius: 0.5rem;
 }
 
+:host ::ng-deep .p-galleria .p-galleria-item-nav .p-icon {
+  color: #000000 !important;
+}
+
 /* Override PrimeNG styles for better navigation arrows */
 :host ::ng-deep .p-galleria {
   .p-galleria-item-navigation-next,
   .p-galleria-item-navigation-prev {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     margin: 0 1rem;
+    width: 3rem;
+    height: 3rem;
     transition: all 0.2s;
-    
-    &:hover {
-      background: white;
-      transform: scale(1.1);
-    }
+
   }
 
   .p-galleria-indicators {
@@ -351,11 +353,13 @@
       background-color: rgba(255, 255, 255, 0.5);
       
       &.p-highlight {
-        background-color: white;
+        /* background-color: white; */
       }
     }
   }
 }
+
+
 /* PrimeNG Component Overrides */
 :host ::ng-deep {
   .p-dropdown,

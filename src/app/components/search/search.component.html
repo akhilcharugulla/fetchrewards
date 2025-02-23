@@ -181,20 +181,29 @@
 >
   <div class="galleria-container">
     <p-galleria 
-      [value]="selectedDogImages" 
-      [showThumbnails]="false"
-      [showItemNavigators]="true"
-      [circular]="true"
-      [showIndicators]="true"
-      [containerStyle]="{ 'max-width': '900px', 'margin': 'auto' }"
-      [showIndicatorsOnItem]="true"
-    >
-      <ng-template pTemplate="item" let-item>
-        <div class="galleria-item">
-          <img [src]="item" />
-        </div>
-      </ng-template>
-    </p-galleria>
+    [value]="selectedDogImages" 
+    [showThumbnails]="true"
+    [showItemNavigators]="true"
+    [circular]="true"
+    [showIndicators]="false"
+    [containerStyle]="{ 'max-width': '900px', 'margin': 'auto' }"
+    [showIndicatorsOnItem]="true"
+    [numVisible]="5"
+    [responsiveOptions]="responsiveOptions"
+    [activeIndex]="activeIndex"
+    (activeIndexChange)="onActiveIndexChange($event)"
+  >
+    <ng-template pTemplate="item" let-item>
+      <div class="galleria-item">
+        <img [src]="item" />
+      </div>
+    </ng-template>
+    <ng-template pTemplate="thumbnail" let-item let-index="index">
+      <div class="galleria-thumbnail" (click)="onThumbnailClick(index)">
+        <img [src]="item" />
+      </div>
+    </ng-template>
+  </p-galleria>
 
     <div class="galleria-actions">
       <p-button 
