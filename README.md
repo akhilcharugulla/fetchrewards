@@ -68,4 +68,5 @@ Tasks which are pending and cannot be completed due to time constraints:
 2) Styling the Website in Mobile version. Currently it works for some extent, some code refeactoring is needed
 3) Adding some more features and styling the webpage to look more cleaner and some code refactoring is needed.
 
-Link to Youtube Video:
+Link to Youtube Video: https://youtu.be/aqWNtdfpQIE
+(Please put on earphones for better quality)
