@@ -75,21 +75,22 @@ export class SearchComponent implements OnInit {
   selectedCities: any = [];
   zipCodes: any[] = [];
   cities: any[] = [];
-  
+  showMobileFilters: boolean = false;
+  isMobileView: boolean = window.innerWidth <= 576;
 
   responsiveOptions: any[] = [
-      {
-          breakpoint: '1024px',
-          numVisible: 5
-      },
-      {
-          breakpoint: '768px',
-          numVisible: 3
-      },
-      {
-          breakpoint: '560px',
-          numVisible: 2
-      }
+    {
+      breakpoint: '1024px',
+      numVisible: 5
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 3
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 2
+    }
   ];
 
   ageOptions = [
@@ -114,13 +115,23 @@ export class SearchComponent implements OnInit {
     private messageService: MessageService,
     private locationService: LocationService,
     private favoritesService: FavouritesService
-  ) {}
+  ) {
+    // Add window resize listener
+    window.addEventListener('resize', () => {
+      this.isMobileView = window.innerWidth <= 576;
+    });
+  }
 
   ngOnInit() {
     this.loadBreeds();
     this.search();
     this.searchLocations();
     this.getUserLocation();
+    this.favorites = this.favoritesService.getFavorites();
+  }
+
+  toggleMobileFilters() {
+    this.showMobileFilters = !this.showMobileFilters;
   }
 
   onPageChange(event: any) {
@@ -221,7 +232,6 @@ export class SearchComponent implements OnInit {
 
   openGalleria(dog: Dog) {
     this.selectedDog = dog;
-    // Creating an array of 5 duplicate images for the demo
     this.selectedDogImages = Array(5).fill({img: dog.img, name: dog.name});
     this.showGalleria = true;
     this.activeIndex = 0;
@@ -255,6 +265,7 @@ export class SearchComponent implements OnInit {
 
   toggleFavorite(dog: Dog) {
     this.favoritesService.toggleFavorite(dog);
+    this.favorites = this.favoritesService.getFavorites();
   }
 
   isFavorite(dog: Dog): boolean {
@@ -277,7 +288,6 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    // Reset matched dog and show dialog immediately
     this.matchedDog = null;
     this.showMatchDialog = true;
 
@@ -323,11 +333,9 @@ export class SearchComponent implements OnInit {
           uniqueLocations.set(value.city, value.zip_code);
         });
  
-        // Extract unique cities and zip codes
         this.cities = Array.from(uniqueLocations.keys()); 
         this.zipCodes = Array.from(uniqueLocations.values()); 
  
-        // Create locationOptions array
         this.locationOptions = Array.from(uniqueLocations, ([city, zip_code]) => ({
           label: city,   
           value: zip_code 

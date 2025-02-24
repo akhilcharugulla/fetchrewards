@@ -376,16 +376,6 @@
   opacity: 1;
   transform: translateY(0);
 }
-  
-  .p-button.match-button {
-    background-color: #f06292;
-    border-color: #f06292;
-  }
-  
-  .p-button.match-button:hover {
-    background-color: #ec407a;
-    border-color: #ec407a;
-  }
 
   .p-dialog .p-dialog-header {
     padding: 1.25rem 1.5rem;

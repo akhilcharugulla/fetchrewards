@@ -85,14 +85,6 @@
 
         <!-- Right side - Sort and Find Match -->
         <div class="controls-right">
-          <p-button
-            *ngIf="favorites.length > 0"
-            label="Find Match"
-            icon="pi pi-heart"
-            (onClick)="findMatch()"
-            styleClass="match-button"
-          ></p-button>
-
           <p-dropdown
           [options]="sortOptions"
           [(ngModel)]="sortField"

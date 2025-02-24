@@ -55,7 +55,7 @@ export class FavoritesComponent implements OnInit {
   loadFavorites() {
     this.favoriteDogs = this.favoritesService.getFavorites();
     this.showEmptyState = this.favoriteDogs.length === 0;
-    this.loadDogLocations(this.favoriteDogs)
+    this.loadDogLocations(this.favoriteDogs);
     this.getUserLocation();
   }
 
@@ -75,7 +75,6 @@ export class FavoritesComponent implements OnInit {
       return;
     }
   
-    // First, hide the match dialog and remove the component from DOM
     this.showMatchDialog = false;
     this.matchedDog = null;
   
@@ -105,19 +104,17 @@ export class FavoritesComponent implements OnInit {
       (locations) => {
         this.dogLocations.clear();
         locations.forEach(loc => this.dogLocations.set(loc.zip_code, loc));
-        //this.calculateDistances();
       },
       (error) => console.error('Error loading dog locations:', error)
     );
   }
 
-  
   getUserLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           this.userLocation = position;
-          this.calculateDistances(); // Calculate distances once location is available
+          this.calculateDistances();
         },
         (error) => {
           console.error('Error getting user location:', error);
@@ -148,5 +145,4 @@ export class FavoritesComponent implements OnInit {
       return dog;
     });
   }
-
 }
