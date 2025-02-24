@@ -80,7 +80,6 @@ font-size: 0.85rem;
 margin-top: 0.25rem;
 }
 
-
 /* When input is focused or has text */
 .input-container input:focus + label,
 .input-container input:not(:placeholder-shown) + label {

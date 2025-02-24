@@ -98,7 +98,6 @@
   font-size: 1rem;
 }
 
-/* Adjust input padding for dropdown button */
 :host ::ng-deep .p-autocomplete.p-autocomplete-dd .p-autocomplete-input {
   padding-right: 3rem;
 }
@@ -188,7 +187,7 @@
 /* Clear button styles */
 :host ::ng-deep .p-autocomplete .p-autocomplete-clear-icon {
   color: #666;
-  right: 48px; /* Adjusted for dropdown button */
+  right: 48px;
   transition: all 0.2s ease;
 }
 
@@ -210,17 +209,14 @@
   background-color: #2196f3;
 }
 
-/* Success (Green) */
 .progress-bar.success {
   background-color: #4caf50;
 }
 
-/* Warning (Orange) */
 .progress-bar.warn {
   background-color: #ff9800;
 }
 
-/* Error (Red) */
 .progress-bar.error {
   background-color: #f44336;
 }

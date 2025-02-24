@@ -1,0 +1,43 @@
+.match-container {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+    background-color: #f8f9fa;
+  }
+  .match-content {
+    width: 100%;
+    max-width: 640px;
+  }
+  .match-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2196F3;
+    margin-left: 200px;
+  }
+  .match-card {
+    padding: 1rem;
+  }
+  .match-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  .match-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 8px;
+  }
+  .match-info {
+    text-align: center;
+  }
+  .no-match {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }

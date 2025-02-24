@@ -1,0 +1,30 @@
+<div class="match-container">
+    <div class="match-content" *ngIf="matchedDog">
+      <h2 class="match-title">Your Perfect Match!</h2>
+      <p-galleria 
+        [value]="[matchedDog]" 
+        [showThumbnails]="false" 
+        [showIndicators]="false"
+        [containerStyle]="{ 'max-width': '640px' }">
+        <ng-template pTemplate="item" let-dog>
+          <div class="match-card">
+            <p-card>
+              <div class="match-details">
+                <img [src]="dog.img" [alt]="dog.name" class="match-image"/>
+                <div class="match-info">
+                  <h3>{{dog.name}}</h3>
+                  <p><strong>Breed:</strong> {{dog.breed}}</p>
+                  <p><strong>Age:</strong> {{dog.age}} years</p>
+                  <p><strong>Location:</strong> {{dog.zip_code}}</p>
+                </div>
+              </div>
+            </p-card>
+          </div>
+        </ng-template>
+      </p-galleria>
+    </div>
+    <div class="no-match" *ngIf="!matchedDog">
+      <h3>No match found yet!</h3>
+      <p>Add some dogs to your favorites to find your perfect match.</p>
+    </div>
+  </div>

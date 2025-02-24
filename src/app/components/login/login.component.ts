@@ -68,7 +68,7 @@ export class LoginComponent {
         this.router.navigate(['/search']);
       },
       error: (err) => {
-        console.log(err);
+        // routing again to search page beacuse /login api of fetch rewards in backend , is returning us error response
         if(err.status== "200"){
           this.router.navigate(['/search']);
         }else{

@@ -1,4 +1,3 @@
-// navbar.component.ts
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -24,13 +23,14 @@ import { MessageService } from 'primeng/api';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit {  // <-- Add OnInit interface
+  searchQuery: string = '';
+  filteredBreeds: string[] = [];
+  allBreeds: string[] = [];  // Store all breeds here
+
   @Output() matchClick = new EventEmitter<void>();
   @Output() searchBreed = new EventEmitter<string>();
 
-  searchQuery: string = '';
-  filteredBreeds: string[] = [];
-  
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -40,19 +40,16 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-  }
-
-  get hasMatches(): boolean {
-    return this.favouritesService.getFavorites().length > 0;
+    this.dogService.getBreeds().subscribe(breeds => {
+      this.allBreeds = breeds;
+    });
   }
 
   filterBreeds(event: any) {
-    this.dogService.getBreeds().subscribe(breeds => {
-      const query = event.query.toLowerCase();
-      this.filteredBreeds = breeds.filter(breed => 
-        breed.toLowerCase().includes(query)
-      );
-    });
+    const query = event.query.toLowerCase();
+        this.filteredBreeds = this.allBreeds.filter(breed => 
+      breed.toLowerCase().includes(query)
+    );
   }
 
   onSearch(event: any) {
@@ -84,6 +81,10 @@ export class NavbarComponent implements OnInit {
         life: 5000
       });
     }
+  }
+
+  get hasMatches(): boolean {
+    return this.favouritesService.getFavorites().length > 0;
   }
 
   getProgressBarClass(severity: string): string {
