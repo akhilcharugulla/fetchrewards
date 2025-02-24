@@ -56,12 +56,12 @@ There is search feature, where we can search with dog breeeds
 
 
 Api Calls:
-When user logs in it call the login post api call /login
-Once user logs in it calls the /breeds end point, which loads all the breeds.
-To fill the items in grid, the dog cards by default dog ids are fetched from /search url
-Once we get dog Ids we call the /dogs api using the dogids as payload and we get the information of each dogs.
-The /locations api is called with zipcodes (which we got from /dogs) to get the exact location of dogs and populated in dog card componnet
-Once user favourite items we call /match api(with the favourited dog ids) to get the matched dog
+1) When user logs in it call the login post api call /login
+2) Once user logs in it calls the /breeds end point, which loads all the breeds.
+3) To fill the items in grid, the dog cards by default dog ids are fetched from /search url
+4) Once we get dog Ids we call the /dogs api using the dogids as payload and we get the information of each dogs.
+5) The /locations api is called with zipcodes (which we got from /dogs) to get the exact location of dogs and populated in dog card componnet
+6) Once user favourite items we call /match api(with the favourited dog ids) to get the matched dog
 
 Tasks which are pending and cannot be completed due to time constraints:
 1) Add the black theme feature to website
