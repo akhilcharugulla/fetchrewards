@@ -4,10 +4,11 @@
       <ng-container *ngIf="dog; else loadingSkeleton">
         <img [src]="dog.img" [alt]="dog.name" class="dog-image" />
       </ng-container>
+      
       <ng-template #loadingSkeleton>
         <p-skeleton height="200px"></p-skeleton>
       </ng-template>
-        <span
+        <span *ngIf="!hideLoveSymbol"
         class="favorite-icon"
         [ngClass]="{ favorited: isFavorite, 'not-favorited': !isFavorite }"
         (click)="onFavoriteClick($event)"
@@ -20,6 +21,7 @@
     <ng-container *ngIf="dog; else nameSkeleton">
       <h3 class="dog-name">{{ dog.name }}</h3>
     </ng-container>
+    
     <ng-template #nameSkeleton>
       <p-skeleton width="60%" height="1.5rem"></p-skeleton>
     </ng-template>    <div class="info-row">

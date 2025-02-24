@@ -18,6 +18,7 @@ export class DogCardComponent {
   @Input() isFavorite: boolean = false;
   @Input() distance?: number;
   @Input() location?: Location;
+  @Input() hideLoveSymbol: boolean = false;
   @Output() favoriteToggle = new EventEmitter<Dog>();
   @Output() imageClick = new EventEmitter<Dog>();
 

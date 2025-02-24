@@ -19,6 +19,7 @@ import { ChipModule } from 'primeng/chip';
 import { GalleriaModule } from 'primeng/galleria';
 import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
+import { MatchComponent } from '../match/match.component';
 
 @Component({
   selector: 'app-search',
@@ -39,7 +40,8 @@ import { SkeletonModule } from 'primeng/skeleton';
     ChipModule,
     GalleriaModule,
     TooltipModule,
-    SkeletonModule
+    SkeletonModule,
+    MatchComponent
   ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css'
@@ -73,6 +75,7 @@ export class SearchComponent implements OnInit {
   selectedCities: any = [];
   zipCodes: any[] = [];
   cities: any[] = [];
+  
 
   responsiveOptions: any[] = [
       {
@@ -197,7 +200,7 @@ export class SearchComponent implements OnInit {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           this.userLocation = position;
-          this.calculateDistances(); // Calculate distances once location is available
+          this.calculateDistances();
         },
         (error) => {
           console.error('Error getting user location:', error);
@@ -305,6 +308,10 @@ export class SearchComponent implements OnInit {
         this.showMatchDialog = false;
       }
     });
+  }
+
+  onDialogClosed() {
+    this.showMatchDialog = false;
   }
   
   searchLocations() {

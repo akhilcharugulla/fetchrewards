@@ -147,32 +147,7 @@
 </ng-template>
 
 <!-- Match Dialog -->
-<p-dialog
-    [(visible)]="showMatchDialog"
-    header="Your Perfect Match123!"
-    [modal]="true"
-    [style]="{width: '90vw', maxWidth: '800px'}"
-    [blockScroll]="true"
-  >
-    <div class="match-dialog-content" *ngIf="matchedDog">
-      <div class="match-result">
-        <h3 class="match-title">We found your perfect companion!</h3>
-        <app-dog-card
-          *ngIf="matchedDog; else skeletonLoader"
-          [dog]="matchedDog"
-          [location]="dogLocations.get(matchedDog.zip_code)"
-          [isFavorite]="true"
-          (favoriteToggle)="toggleFavorite($event)"
-          class="match-card"
-        ></app-dog-card>
-      </div>
-    </div>
-    <div class="match-dialog-content" *ngIf="!matchedDog">
-      <div class="match-result">
-        <h3 class="match-title">Looking for your perfect match...</h3>
-      </div>
-    </div>
-  </p-dialog>
+  <app-match [matchedDog]="matchedDog" [dogLocations] = "dogLocations" [showMatchDialog] = "showMatchDialog" (dialogClosed)="onDialogClosed()"></app-match>
 
   <!-- Add this at the bottom of your search.component.html, after the match dialog -->
 <p-dialog 

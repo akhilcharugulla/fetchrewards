@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GalleriaModule } from 'primeng/galleria';
 import { Dog } from '../../services/dog.service';
@@ -20,13 +20,19 @@ import { DialogModule } from 'primeng/dialog';
 })
 export class MatchComponent{
   @Input() dogLocations: Map<string, Location> = new Map();
-  @Input() showMatchDialog!: boolean;
   @Input() matchedDog: Dog | null = null;
+  @Input() showMatchDialog: boolean;
+  hideLoveSymbol: boolean
+  @Output() dialogClosed = new EventEmitter<void>();
 
-  constructor() {}
+  constructor() {
+    this.showMatchDialog = false;
+    this.hideLoveSymbol = true;
+  }
   
   closeMatchDialog() {
     this.showMatchDialog = false;
+    this.dialogClosed.emit();
   }
 
 }

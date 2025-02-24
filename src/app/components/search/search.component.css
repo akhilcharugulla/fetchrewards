@@ -168,7 +168,7 @@
   flex-grow: 1;
 }
 
-.match-result {
+/* .match-result {
   text-align: center;
   width: 100%;
 }
@@ -183,7 +183,7 @@
 .match-card {
   max-width: 400px;
   margin: 0 auto;
-}
+} */
 
 :host ::ng-deep .p-dialog {
   .p-dialog-header {
@@ -235,11 +235,11 @@
 }
 
 /* Match Dialog */
-.match-dialog-content {
+/* .match-dialog-content {
   display: flex;
   justify-content: center;
   padding: 1rem;
-}
+} */
 
 .no-results {
   display: flex;
