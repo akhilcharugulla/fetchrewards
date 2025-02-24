@@ -168,24 +168,8 @@
   flex-grow: 1;
 }
 
-/* .match-result {
-  text-align: center;
-  width: 100%;
-}
 
-.match-title {
-  color: #2196F3;
-  margin-bottom: 2rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.match-card {
-  max-width: 400px;
-  margin: 0 auto;
-} */
-
-:host ::ng-deep .p-dialog {
+/* :host ::ng-deep .p-dialog {
   .p-dialog-header {
     background: #2196F3;
     color: white;
@@ -198,7 +182,7 @@
   .p-dialog-content {
     background: #f8f9fa;
   }
-}
+} */
 
 @media (max-width: 1400px) {
   .dogs-grid {
@@ -234,13 +218,6 @@
   height: 100%;
 }
 
-/* Match Dialog */
-/* .match-dialog-content {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-} */
-
 .no-results {
   display: flex;
   flex-direction: column;
@@ -273,7 +250,6 @@
   font-size: 1.1rem;
 }
 
-/* Add these new styles for the galleria */
 .galleria-container {
   position: relative;
   padding: 1rem;
