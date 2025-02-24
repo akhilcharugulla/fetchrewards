@@ -1,33 +1,40 @@
 <div class="search-container">
-  <p-dialog 
-  [(visible)]="showWelcomeDialog" 
+  <p-dialog
+  [(visible)]="showWelcomeDialog"
   [modal]="true"
   [closable]="true"
   [dismissableMask]="true"
-  [style]="{width: '400px'}"
+  [style]="{width: '450px'}"
   styleClass="welcome-dialog"
 >
   <ng-template pTemplate="header">
-    <h2>Welcome to PawFinder! 🐾</h2>
+    <div class="welcome-header">
+      <i class="pi pi-heart-fill welcome-icon"></i>
+      <h2>Welcome to PawFinder! 🐾</h2>
+    </div>
   </ng-template>
+  
   <div class="welcome-content">
     <p>Hi <span class="user-name">{{userName}}</span>! We're excited to help you find your perfect furry friend.</p>
     <p>Here's what you can do:</p>
-    <ul>
-      <li>Browse through our adorable dogs</li>
-      <li>Add favorites to your collection</li>
-      <li>Find your perfect match</li>
-      <li>Filter by breed, age, and location</li>
+    <ul class="feature-list">
+      <li><i class="pi pi-search"></i> Browse through our adorable dogs</li>
+      <li><i class="pi pi-heart"></i> Add favorites to your collection</li>
+      <li><i class="pi pi-check-circle"></i> Find your perfect match</li>
+      <li><i class="pi pi-filter"></i> Filter by breed, age, and location</li>
     </ul>
   </div>
+  
   <ng-template pTemplate="footer">
-    <button 
-      pButton 
-      label="Let's Start!" 
-      icon="pi pi-heart" 
-      (click)="closeWelcomeDialog()"
-      class="p-button-rounded p-button-success"
-    ></button>
+    <div class="welcome-footer">
+      <button
+        pButton
+        label="Let's Start!"
+        icon="pi pi-heart"
+        (click)="closeWelcomeDialog()"
+        class="p-button-rounded p-button-success welcome-button"
+      ></button>
+    </div>
   </ng-template>
 </p-dialog>
 

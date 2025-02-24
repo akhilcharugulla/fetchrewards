@@ -169,20 +169,82 @@
 }
 
 
-/* :host ::ng-deep .p-dialog {
-  .p-dialog-header {
-    background: #2196F3;
-    color: white;
-  }
-  
-  .p-dialog-header-icon {
-    color: white;
-  }
-  
-  .p-dialog-content {
-    background: #f8f9fa;
-  }
-} */
+/* Welcome Dialog Styling */
+:host ::ng-deep .welcome-dialog .p-dialog-header {
+  background-color: #2196F3;
+  color: white;
+  border-bottom: none;
+  padding-bottom: 0.75rem;
+}
+
+.welcome-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.welcome-icon {
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+:host ::ng-deep .welcome-dialog .p-dialog-content {
+  padding: 1.25rem 1.5rem;
+}
+
+.welcome-content {
+  color: #455a64;
+}
+
+.welcome-content p {
+  margin-bottom: 0.75rem;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #2196F3;
+}
+
+.feature-list {
+  padding-left: 1rem;
+  margin-top: 0.75rem;
+}
+
+.feature-list li {
+  padding: 0.4rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.feature-list li i {
+  color: #2196F3;
+  margin-right: 0.6rem;
+  font-size: 1rem;
+}
+
+:host ::ng-deep .welcome-dialog .p-dialog-footer {
+  border-top: none;
+  padding-top: 0;
+}
+
+:host ::ng-deep .welcome-dialog .p-dialog-header-icon {
+  color: white;
+}
+
+.welcome-footer {
+  display: flex;
+  justify-content: center;
+}
+
+:host ::ng-deep .welcome-button {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .welcome-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
 @media (max-width: 1400px) {
   .dogs-grid {
