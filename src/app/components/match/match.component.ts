@@ -1,38 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GalleriaModule } from 'primeng/galleria';
 import { Dog } from '../../services/dog.service';
-import { FavouritesService } from '../../services/favourites.service';
-import { DogService } from '../../services/dog.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { SkeletonModule } from 'primeng/skeleton';
+import { Location } from '../../services/location.service';
+import { DogCardComponent } from '../dog-card/dog-card.component';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-match',
   standalone: true,
-  imports: [CommonModule, GalleriaModule, CardModule, ButtonModule],
+  imports: [CommonModule, GalleriaModule, CardModule, ButtonModule, 
+    SkeletonModule, DogCardComponent, DialogModule
+  ],
   templateUrl: './match.component.html',
   styleUrl: './match.component.css'
 })
 export class MatchComponent implements OnInit {
-  matchedDog: Dog | null = null;
+  @Input() dogLocations: Map<string, Location> = new Map();
+  @Input() showMatchDialog!: boolean;
+  @Input() matchedDog: Dog | null = null;
 
-  constructor(
-    private favouritesService: FavouritesService,
-    private dogService: DogService
-  ) {}
+  constructor() {}
 
   ngOnInit() {
-    this.findMatch();
+  }
+  
+  closeMatchDialog() {
+    this.showMatchDialog = false;
   }
 
-  findMatch() {
-    const favorites = this.favouritesService.getFavorites();
-    if (favorites.length > 0) {
-      const favoriteIds = favorites.map(dog => dog.id);
-      this.dogService.getMatch(favoriteIds).subscribe(matchId => {
-        this.matchedDog = favorites.find(dog => dog.id === matchId) || null;
-      });
-    }
-  }
 }

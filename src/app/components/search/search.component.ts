@@ -186,7 +186,6 @@ export class SearchComponent implements OnInit {
           location.latitude,
           location.longitude
         );
-        console.log(distance , "miles away")
         return { ...dog, distance };
       }
       return dog;

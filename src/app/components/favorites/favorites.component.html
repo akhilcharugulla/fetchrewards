@@ -50,23 +50,7 @@
   </div>
 </div>
 
-<p-dialog
-  [(visible)]="showMatchDialog"
-  header="Your Perfect Match!"
-  [modal]="true"
-  [style]="{width: '90vw', maxWidth: '500px'}"
->
-  <div *ngIf="matchedDog" class="match-dialog-content">
-    <app-dog-card
-    *ngIf="matchedDog; else skeletonLoader"
-      [dog]="matchedDog"
-      [isFavorite]="true"
-      [distance]="matchedDog.distance"
-      [location]="dogLocations.get(matchedDog.zip_code)"
-      (favoriteToggle)="toggleFavorite($event)"
-    ></app-dog-card>
-  </div>
-</p-dialog>
+<app-match [matchedDog]="matchedDog" [dogLocations] = "dogLocations" [showMatchDialog] = "showMatchDialog"></app-match>
 
 <ng-template #skeletonLoader>
   <p-card class="dog-card">

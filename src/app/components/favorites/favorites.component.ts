@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
@@ -13,6 +13,7 @@ import { ChipModule } from 'primeng/chip';
 import { SkeletonModule } from 'primeng/skeleton';
 import { CardModule } from 'primeng/card';
 import { LocationService, Location } from '../../services/location.service';
+import { MatchComponent } from '../match/match.component';
 
 @Component({
   selector: 'app-favorites',
@@ -25,7 +26,8 @@ import { LocationService, Location } from '../../services/location.service';
     DogCardComponent,
     ChipModule,
     CardModule,
-    SkeletonModule
+    SkeletonModule,
+    MatchComponent
   ],
   templateUrl: './favorites.component.html',
   styleUrl: './favorites.component.css'
@@ -72,16 +74,21 @@ export class FavoritesComponent implements OnInit {
       });
       return;
     }
-
+  
+    // First, hide the match dialog and remove the component from DOM
+    this.showMatchDialog = false;
+    this.matchedDog = null;
+  
     const favoriteIds = this.favoriteDogs.map(dog => dog.id);
     this.dogService.getMatch(favoriteIds).subscribe(matchId => {
       const matchedDog = this.favoriteDogs.find(dog => dog.id === matchId);
+      
       if (matchedDog) {
-        this.matchedDog = matchedDog;
-        this.showMatchDialog = true;
+          this.matchedDog = matchedDog;
+          this.showMatchDialog = true;
       }
     });
-  }
+  }  
 
   goBack() {
     this.router.navigate(['/search']);
@@ -136,7 +143,6 @@ export class FavoritesComponent implements OnInit {
           location.latitude,
           location.longitude
         );
-        console.log(distance , "miles away")
         return { ...dog, distance };
       }
       return dog;
