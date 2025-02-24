@@ -78,7 +78,7 @@ export class SearchComponent implements OnInit {
   cities: any[] = [];
   showMobileFilters: boolean = false;
   isMobileView: boolean = window.innerWidth <= 576;
-  showWelcomeDialog: boolean = true;
+  showWelcomeDialog: boolean;
   userName: string = '';
 
   responsiveOptions: any[] = [
@@ -125,6 +125,15 @@ export class SearchComponent implements OnInit {
       this.isMobileView = window.innerWidth <= 576;
     });
     this.userName = this.authService.getUserName();
+
+    const showWelcome = sessionStorage.getItem('showWelcomeDialog');
+    if (showWelcome === 'true') {
+      sessionStorage.removeItem('showWelcomeDialog');
+      this.showWelcomeDialog = true;
+    }else{
+      this.showWelcomeDialog = false;
+    }
+
   }
 
   ngOnInit() {

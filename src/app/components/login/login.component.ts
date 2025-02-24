@@ -69,6 +69,7 @@ export class LoginComponent {
       },
       error: (err) => {
         // routing again to search page beacuse /login api of fetch rewards in backend , is returning us error response
+        sessionStorage.setItem('showWelcomeDialog', 'true');
         if(err.status== "200"){
           this.router.navigate(['/search']);
         }else{
