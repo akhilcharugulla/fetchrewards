@@ -18,15 +18,12 @@ import { DialogModule } from 'primeng/dialog';
   templateUrl: './match.component.html',
   styleUrl: './match.component.css'
 })
-export class MatchComponent implements OnInit {
+export class MatchComponent{
   @Input() dogLocations: Map<string, Location> = new Map();
   @Input() showMatchDialog!: boolean;
   @Input() matchedDog: Dog | null = null;
 
   constructor() {}
-
-  ngOnInit() {
-  }
   
   closeMatchDialog() {
     this.showMatchDialog = false;

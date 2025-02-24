@@ -79,7 +79,7 @@ export class LocationService {
       Math.sin(dLon/2) * Math.sin(dLon/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     const d = R * c;
-    return Math.round(d * 0.621371); // Convert to miles and round
+    return Math.round(d * 0.621371); 
   }
 
   private toRad(degrees: number): number {
