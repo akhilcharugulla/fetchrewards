@@ -1,4 +1,36 @@
 <div class="search-container">
+  <p-dialog 
+  [(visible)]="showWelcomeDialog" 
+  [modal]="true"
+  [closable]="true"
+  [dismissableMask]="true"
+  [style]="{width: '400px'}"
+  styleClass="welcome-dialog"
+>
+  <ng-template pTemplate="header">
+    <h2>Welcome to PawFinder! 🐾</h2>
+  </ng-template>
+  <div class="welcome-content">
+    <p>Hi <span class="user-name">{{userName}}</span>! We're excited to help you find your perfect furry friend.</p>
+    <p>Here's what you can do:</p>
+    <ul>
+      <li>Browse through our adorable dogs</li>
+      <li>Add favorites to your collection</li>
+      <li>Find your perfect match</li>
+      <li>Filter by breed, age, and location</li>
+    </ul>
+  </div>
+  <ng-template pTemplate="footer">
+    <button 
+      pButton 
+      label="Let's Start!" 
+      icon="pi pi-heart" 
+      (click)="closeWelcomeDialog()"
+      class="p-button-rounded p-button-success"
+    ></button>
+  </ng-template>
+</p-dialog>
+
   <app-navbar (matchClick)="onMatchClick()" (searchBreed)="onSearchBreed($event)"></app-navbar>  <!-- Main grid layout -->
   <div class="search-grid">
     <!-- Left Sidebar for Filters -->

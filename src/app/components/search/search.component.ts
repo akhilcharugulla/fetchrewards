@@ -20,6 +20,7 @@ import { GalleriaModule } from 'primeng/galleria';
 import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
 import { MatchComponent } from '../match/match.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-search',
@@ -77,6 +78,8 @@ export class SearchComponent implements OnInit {
   cities: any[] = [];
   showMobileFilters: boolean = false;
   isMobileView: boolean = window.innerWidth <= 576;
+  showWelcomeDialog: boolean = true;
+  userName: string = '';
 
   responsiveOptions: any[] = [
     {
@@ -114,12 +117,14 @@ export class SearchComponent implements OnInit {
     private dogService: DogService,
     private messageService: MessageService,
     private locationService: LocationService,
-    private favoritesService: FavouritesService
+    private favoritesService: FavouritesService,
+    private authService: AuthService
   ) {
     // Add window resize listener
     window.addEventListener('resize', () => {
       this.isMobileView = window.innerWidth <= 576;
     });
+    this.userName = this.authService.getUserName();
   }
 
   ngOnInit() {
@@ -365,5 +370,9 @@ export class SearchComponent implements OnInit {
     }
     this.currentPage = 0;
     this.search();
+  }
+
+  closeWelcomeDialog() {
+    this.showWelcomeDialog = false;
   }
 }
