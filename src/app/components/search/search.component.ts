@@ -66,6 +66,14 @@ export class SearchComponent implements OnInit {
   selectedDogImages: any[] = [];
   selectedDog: Dog | null = null;
   activeIndex: number = 0;
+  results: any[] = [];
+  locationInput = ''; 
+  milesInput = 100; 
+  selectedZipCode: any = [];
+  selectedCities: any = [];
+  zipCodes: any[] = [];
+  cities: any[] = [];
+
   responsiveOptions: any[] = [
       {
           breakpoint: '1024px',
@@ -97,14 +105,6 @@ export class SearchComponent implements OnInit {
     { label: 'Age (Youngest)', value: 'age:asc' },
     { label: 'Age (Oldest)', value: 'age:desc' }
   ];
-  
-  results: any[] = [];
-  locationInput = ''; 
-  milesInput = 100; 
-  selectedZipCode: any = [];
-  selectedCities: any = [];
-  zipCodes: any[] = [];
-  cities: any[] = [];
 
   constructor(
     private dogService: DogService,
@@ -192,7 +192,6 @@ export class SearchComponent implements OnInit {
     });
   }
 
-
   getUserLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -208,7 +207,6 @@ export class SearchComponent implements OnInit {
       console.error('Geolocation is not supported by this browser.');
     }
   }
-
   
   onActiveIndexChange(event: number) {
     this.activeIndex = event;
@@ -220,7 +218,7 @@ export class SearchComponent implements OnInit {
 
   openGalleria(dog: Dog) {
     this.selectedDog = dog;
-    // Create an array of 5 duplicate images for the demo
+    // Creating an array of 5 duplicate images for the demo
     this.selectedDogImages = Array(5).fill({img: dog.img, name: dog.name});
     this.showGalleria = true;
     this.activeIndex = 0;

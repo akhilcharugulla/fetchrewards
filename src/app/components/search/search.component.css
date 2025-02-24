@@ -1,11 +1,11 @@
 /* Main Container */
 .search-container {
   height: 100vh;
-  width: 100vw; /* Changed from 100% to 100vw */
+  width: 100vw;
   box-sizing: border-box;
   background-color: #f8f9fa;
-  overflow: hidden; /* Changed from not specified */
-  position: fixed; /* Added to ensure full coverage */
+  overflow: hidden;
+  position: fixed;
   top: 0;
   left: 0;
 }
@@ -36,7 +36,7 @@
 }
 
 .filters-sidebar.collapsed {
-  width: 60px; /* Just enough width to show the toggle button */
+  width: 60px;
 }
 
 .filters-card {
@@ -52,7 +52,6 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.25rem 1.5rem;
-  /* border-bottom: 1px solid #e9ecef; */
 }
 
 .filters-header h3 {
@@ -83,6 +82,7 @@
 .filters-sidebar.collapsed .filters-header h3 {
   display: none;
 }
+
 /* Main Content Area */
 .main-content {
   flex-grow: 1;
@@ -100,8 +100,6 @@
 
 /* Control Bar */
 .control-bar {
-  /* background-color: white; */
-  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); */
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -234,11 +232,6 @@
 
 .dog-card-wrapper {
   height: 100%;
-}
-
-/* Pagination Container */
-.pagination-container {
-  /* background-color: white; */
 }
 
 /* Match Dialog */
