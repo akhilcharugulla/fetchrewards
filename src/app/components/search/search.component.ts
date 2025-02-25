@@ -51,7 +51,7 @@ export class SearchComponent implements OnInit {
   dogIds: any[] = [];
   breeds: string[] = [];
   selectedBreeds: string[] = [];
-  selectedAge: any = null;
+  selectedAge: any[] = [];
   dogs: Dog[] = [];
   totalDogs: number = 0;
   favorites: Dog[] = [];
@@ -174,9 +174,13 @@ export class SearchComponent implements OnInit {
       from: this.currentPage * 12
     };
 
-    if (this.selectedAge) {
-      params.ageMin = this.selectedAge.min;
-      params.ageMax = this.selectedAge.max;
+    if (this.selectedAge && this.selectedAge.length > 0) {
+      // Find the minimum and maximum ages across all selected age ranges
+      let minAge = Math.min(...this.selectedAge.map(age => age.min));
+      let maxAge = Math.max(...this.selectedAge.map(age => age.max));
+      
+      params.ageMin = minAge;
+      params.ageMax = maxAge;
     }
 
     this.dogService.searchDogs(params).subscribe(response => {
@@ -363,7 +367,7 @@ export class SearchComponent implements OnInit {
 
   clearFilters() {
     this.selectedBreeds = [];
-    this.selectedAge = null;
+    this.selectedAge = [];
     this.selectedCities = [];
     this.currentPage = 0;
     this.sortField = 'breed';
